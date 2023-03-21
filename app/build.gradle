@@ -46,9 +46,13 @@ dependencies {
     implementation 'io.github.chaosleung:pinview:1.4.4'
     // picasso to load the image in imageview from url
     implementation 'com.squareup.picasso:picasso:2.8'
+
+    //dependency for circular image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
     // dependency for slider view
-   // implementation 'com.github.smarteist:autoimageslider:1.4.0'
-    //implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
+//     implementation 'com.github.smarteist:autoimageslider:1.4.0'
+//    implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:31.2.3')

@@ -36,10 +36,12 @@ public class SignUpActivity extends AppCompatActivity {
     EditText nameTxt,phoneNumberTxt,passwordTxt;
     Button signUpBtn;
     String name,phoneNumber,password;
+
     FirebaseAuth authInstance;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     FirebaseDatabase firebaseDatabase;
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallback;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
