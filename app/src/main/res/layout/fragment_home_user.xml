@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.HomeUserFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EEEFEE">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/top1"
+                    android:layout_width="fill_parent"
+                    android:gravity="right"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Welcome,"
+                        android:fontFamily="@font/yrsabolditalic"
+                        android:textSize="20dp"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Kuldeep"
+                        android:textColor="@color/darkgrean"
+                        android:fontFamily="@font/yrsaitalic"
+                        android:textSize="20dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/kuld"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30sp"
+                        android:fontFamily="@font/yrsabolditalic"
+                        android:paddingLeft="20dp"
+                        android:textColor="@color/darkgrean"
+                        android:text="Let's find the best"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:textSize="30sp"
+                        android:fontFamily="@font/yrsabolditalic"
+                        android:text="Services"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="15dp">
+                    <EditText
+                        android:layout_width="300dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:paddingLeft="15dp"
+                        android:hint="Search here"
+                        android:textStyle="bold"
+                        android:background="@drawable/bg_searchedttext"/>
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_search"
+                        android:layout_marginLeft="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="9dp">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="20dp"
+                        app:cardCornerRadius="18dp"
+                        app:cardBackgroundColor="@color/lightgrean">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Get 25% discount on your first book"
+                            android:layout_gravity="center_vertical"
+                            android:fontFamily="@font/yrsaitalic"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:layout_marginLeft="20dp"
+                            />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="260dp"
+                            android:src="@drawable/electrician" />
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Category"
+                        android:layout_marginLeft="12dp"
+                        android:fontFamily="@font/yrsabolditalic"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:fontFamily="@font/yrsabolditalic"
+                        android:layout_marginLeft="290dp"
+                        android:text="see all"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+
+    </ScrollView>
+</FrameLayout>
