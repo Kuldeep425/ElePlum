@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activity.SignUpActivity"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:textColor="@color/login_color"
+
+        android:textSize="45dp"
+
+        android:textStyle="bold"
+        android:letterSpacing="0.03"/>
+    <EditText
+        android:id="@+id/nameTxt"
+        android:layout_width="350dp"
+        android:layout_height="45dp"
+        android:hint="Name"
+        android:inputType="text"
+        android:textStyle="normal"
+        android:textSize="16sp"
+        android:ems="10"
+        android:drawableStart="@drawable/baseline_person_24"
+        android:drawablePadding="12dp"
+        android:background="@drawable/bg_edittext"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="5dp"
+
+        />
+
+    <EditText
+        android:id="@+id/phoneNumberTxt"
+        android:layout_width="350dp"
+        android:layout_height="45dp"
+        android:hint="Contact No."
+        android:inputType="number"
+        android:textStyle="normal"
+        android:textSize="16sp"
+        android:ems="10"
+        android:drawableStart="@drawable/ic_phone"
+        android:drawablePadding="12dp"
+        android:background="@drawable/bg_edittext"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="5dp"
+
+        />
+    <EditText
+        android:id="@+id/passwordTxt"
+        android:layout_width="350dp"
+        android:layout_height="45dp"
+        android:hint="Password"
+        android:background="@drawable/bg_edittext"
+        android:textStyle="normal"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="12dp"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+
+        android:textColor="#0d6e6a"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="5dp"
+        />
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25sp"
+        android:layout_marginTop="10dp"
+        android:text="Register as electrician"
+        android:textStyle="bold"
+        android:textColor="@color/login_color"/>
+    <Button
+        android:id="@+id/signUpBtn"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="Sign up"
+        android:textSize="18dp"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+
+        android:backgroundTint="@color/login_color"
+        android:layout_marginTop="40dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Already have an account?"
+        android:textColor="@color/login_color"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+
+        />
+
+
+
+
+</LinearLayout>
