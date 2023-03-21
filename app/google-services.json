@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "350613330443",
+    "project_id": "eleplum-f2dae",
+    "storage_bucket": "eleplum-f2dae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350613330443:android:70c8fdee21da6cc4c5850e",
+        "android_client_info": {
+          "package_name": "com.example.eleplum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "350613330443-mt61s5vh736ttau3m8frqjc0qcrpale1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnzSI4fb04q3-8AgcM4gm037m4h3YXDCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "350613330443-mt61s5vh736ttau3m8frqjc0qcrpale1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
