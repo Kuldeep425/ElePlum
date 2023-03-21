@@ -10,4 +10,8 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="maincolor">#BC8ED7</color>
+    <color name="lightgrean">#90EE90</color>
+    <color name="darkgrean">#00A800</color>
+    <color name="green_700">#5FBA1E</color>
+
 </resources>

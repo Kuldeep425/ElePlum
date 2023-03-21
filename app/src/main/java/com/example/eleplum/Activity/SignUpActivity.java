@@ -14,9 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eleplum.Models.User;
 import com.example.eleplum.R;
-import com.google.firebase.FirebaseAppLifecycleListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
+
 
 public class SignUpActivity extends AppCompatActivity {
     CheckBox signUpEleBox;
@@ -24,8 +22,6 @@ public class SignUpActivity extends AppCompatActivity {
     EditText nameTxt,phoneNumberTxt,passwordTxt;
     Button signUpBtn;
     String name,phoneNumber,password;
-    FirebaseAuth authInstance;
-    FirebaseDatabase firebaseDatabase;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
