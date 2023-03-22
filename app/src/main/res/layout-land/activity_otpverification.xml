@@ -39,7 +39,7 @@
         <TextView
             android:layout_width="500dp"
             android:layout_height="wrap_content"
-            android:text="Please Enter the OTP sent on the number\n+917080559479"
+            android:text="Please Enter the OTP sent on the number"
             android:fontFamily="@font/dancingscriptbold"
             android:textColor="@color/black"
             android:textSize="25dp"

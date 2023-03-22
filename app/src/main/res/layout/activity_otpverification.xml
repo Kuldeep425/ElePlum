@@ -12,12 +12,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/maincolor"
+            android:background="@color/login_color"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="340dp"
                 android:layout_height="200dp"
-                android:background="@color/maincolor"/>
+                android:background="@color/login_color"/>
             <ImageView
                 android:layout_marginTop="20dp"
                 android:layout_width="30dp"
@@ -36,9 +36,10 @@
             android:scaleX="5"
             android:layout_marginTop="-55dp"/>
         <TextView
+            android:id="@+id/otpTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please Enter the OTP sent on the number\n+917080559479"
+            android:text="Please Enter the OTP sent on the number\n"
             android:fontFamily="@font/dancingscriptbold"
             android:textColor="@color/black"
             android:textSize="20dp"
@@ -65,10 +66,9 @@
             android:text="Verify otp"
             android:shadowRadius="5"
             android:textSize="20dp"
-            android:backgroundTint="@color/maincolor"
             android:fontFamily="@font/caveatsemibold"
             android:textAllCaps="false"
-            android:background="@drawable/bg_button"
+            android:backgroundTint="@color/login_color"
             android:layout_gravity="center"
             android:layout_marginVertical="50dp"/>
     </LinearLayout>
