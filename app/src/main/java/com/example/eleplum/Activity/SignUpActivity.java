@@ -48,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         // calling method to initializing the components
+        initializeTheComponents();
         authInstance = FirebaseAuth.getInstance();
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -93,7 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
 //                mResendToken = token;
             }
         };
-        initializeTheComponents();
+
 
 
 //        if(isShowPass){
@@ -162,9 +163,11 @@ public class SignUpActivity extends AppCompatActivity {
         return true;
     }
 
+    // method to register an electrician
     private void registerAnElectrician() {
     }
 
+    // method to register a user
     private void registerAUser() {
         if(isValidData(1)){
             User user=new User(name,phoneNumber,password);
