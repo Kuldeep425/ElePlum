@@ -1,4 +1,4 @@
-package com.example.eleplum.Activity;
+package com.example.eleplum.Fragments;
 
 import android.os.Bundle;
 

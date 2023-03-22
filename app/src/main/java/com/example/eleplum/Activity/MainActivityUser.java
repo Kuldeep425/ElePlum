@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.eleplum.Fragments.ChatFragment;
 import com.example.eleplum.Fragments.HomeUserFragment;
 import com.example.eleplum.R;
 
