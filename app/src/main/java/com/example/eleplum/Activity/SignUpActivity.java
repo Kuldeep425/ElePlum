@@ -2,6 +2,7 @@ package com.example.eleplum.Activity;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -41,6 +42,9 @@ public class SignUpActivity extends AppCompatActivity {
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     FirebaseDatabase firebaseDatabase;
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallback;
+    User user;
+    boolean isUser=true;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +90,17 @@ public class SignUpActivity extends AppCompatActivity {
                 // The SMS verification code has been sent to the provided phone number, we
                 // now need to ask the user to enter the code and then construct a credential
                 // by combining the code with a verification ID.
+
                 Log.d(TAG, "onCodeSent:" + verificationId);
+                // clear all fields
+                 makeEmptyAttributes();
+                 // change activity to otp verification
+
+                Intent intOtp=new Intent(SignUpActivity.this,OTPVerificationActivity.class);
+                intOtp.putExtra("signUpData",user);
+                intOtp.putExtra("verId",verificationId);
+               // intOtp.putExtra("ifUser",isUser);
+                startActivity(intOtp);
 
                 // Save verification ID and resending token so we can use them later
 //                mVerificationId = verificationId;
@@ -126,10 +140,12 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if(isCheckBox==false){
                     // calling method to register a user
+
                     registerAUser();
                 }
                 else{
                     // calling method to register an electrician
+                    isUser=false;
                     registerAnElectrician();
                 }
 
@@ -138,6 +154,13 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
+
+    }
+
+    private void makeEmptyAttributes() {
+        nameTxt.getText().clear();
+        phoneNumberTxt.getText().clear();
+        passwordTxt.getText().clear();
 
     }
 
@@ -167,7 +190,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void registerAUser() {
         if(isValidData(1)){
-            User user=new User(name,phoneNumber,password);
+             user=new User(name,phoneNumber,password);
 
             PhoneAuthOptions options =
                     PhoneAuthOptions.newBuilder(authInstance)
