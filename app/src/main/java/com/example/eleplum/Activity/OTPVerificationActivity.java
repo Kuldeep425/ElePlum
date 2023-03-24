@@ -113,6 +113,8 @@ public class OTPVerificationActivity extends AppCompatActivity {
                             Toast.makeText(OTPVerificationActivity.this, "Verified", Toast.LENGTH_LONG).show();
                             // method to call to save the user data in database
                             saveUserDataInDatabase(signUpUser);
+                            startActivity(new Intent(OTPVerificationActivity.this,MainActivityUser.class));
+                            finish();
                         } else {
                             // if the code is not correct then we are
                             // displaying an error message to the user.
