@@ -25,38 +25,40 @@
 
         android:textStyle="bold"
         android:letterSpacing="0.03"/>
+
     <EditText
+        android:id="@+id/contactNumber"
         android:layout_width="350dp"
         android:layout_height="45dp"
-        android:hint="Contact no."
-        android:inputType="textEmailAddress"
-        android:textStyle="normal"
-        android:textSize="16sp"
-        android:ems="10"
-        android:drawableStart="@drawable/ic_phone"
-        android:drawablePadding="12dp"
-        android:background="@drawable/bg_edittext"
-        android:textColor="@color/black"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:paddingLeft="5dp"
-
-        />
-    <EditText
-        android:layout_width="350dp"
-        android:layout_height="45dp"
-        android:hint="Password"
         android:background="@drawable/bg_edittext"
-        android:textStyle="normal"
-        android:drawableStart="@drawable/ic_lock"
+        android:drawableStart="@drawable/ic_phone"
         android:drawablePadding="12dp"
-        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="Contact no."
+        android:inputType="textEmailAddress"
+        android:paddingLeft="5dp"
+        android:textColor="@color/black"
         android:textSize="16sp"
 
-        android:textColor="#0d6e6a"
+        android:textStyle="normal" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="350dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:background="@drawable/bg_edittext"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="12dp"
+        android:hint="Password"
+
         android:paddingLeft="5dp"
-        />
+        android:textColor="#0d6e6a"
+        android:textSize="16sp"
+        android:textStyle="normal" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,6 +70,7 @@
 
             />
      <Button
+         android:id="@+id/loginBtn"
          android:layout_width="350dp"
          android:layout_height="50dp"
          android:layout_gravity="center"

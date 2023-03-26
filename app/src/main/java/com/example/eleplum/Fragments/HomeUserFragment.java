@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.eleplum.Activity.CreateTaskActivity;
 import com.example.eleplum.Activity.ElectricianNearByActivity;
 import com.example.eleplum.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -35,12 +36,13 @@ import java.util.jar.Pack200;
 
 
 public class HomeUserFragment extends Fragment {
-    CardView searchNearCardview;
+    CardView searchNearCardview,createTaskview;
     View rootview;
     public final static int REQ_CODE = 30;
     boolean isLocationPer;
     FusedLocationProviderClient fusedLocationProviderClient;
     Location userCurrentLoc;
+    boolean locationRes=false;
 
 
     @Override
@@ -52,7 +54,7 @@ public class HomeUserFragment extends Fragment {
         // initialize the fusedLocationProvider
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
-        // click on search near
+
         searchNearCardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,10 +64,35 @@ public class HomeUserFragment extends Fragment {
                 } else {
                     requestPermissions(new String[]{"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"}, REQ_CODE);
                 }
-
-
+                if(locationRes){
+                    Intent intent=new Intent(getContext(),ElectricianNearByActivity.class);
+                    intent.putExtra("latitude", userCurrentLoc.getLatitude());
+                    intent.putExtra("longitude", userCurrentLoc.getLongitude());
+                    startActivity(intent);
+                }
             }
         });
+
+        createTaskview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkPer()){
+                    // get user current location and change the activity there if the location permission is provided
+                    getUserCurrentLocationMethod();
+                }
+                else {
+                    requestPermissions(new String[]{"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"}, REQ_CODE);
+                }
+                if(locationRes){
+                    Intent intent=new Intent(getContext(),CreateTaskActivity.class);
+                    intent.putExtra("latitude", userCurrentLoc.getLatitude());
+                    intent.putExtra("longitude", userCurrentLoc.getLongitude());
+                    startActivity(intent);
+                }
+            }
+        });
+
+
         return rootview;
     }
 
@@ -93,6 +120,7 @@ public class HomeUserFragment extends Fragment {
     // method to initialize all components
     private void initialize() {
         searchNearCardview = rootview.findViewById(R.id.seach_near_cardview);
+        createTaskview=rootview.findViewById(R.id.create_task_view);
     }
 
     // method to get user current location
@@ -104,14 +132,9 @@ public class HomeUserFragment extends Fragment {
                 @Override
                 public void onSuccess(Object o) {
                     if(o!=null){
-                         userCurrentLoc= (Location) o;
-                        Log.d("Latitude",userCurrentLoc.getLatitude()+"",null);
-                        Log.d("Longitude",userCurrentLoc.getLongitude()+"",null);
+                        userCurrentLoc= (Location) o;
                         Toast.makeText(getContext(), "Lat: "+userCurrentLoc.getLatitude()+" Long: "+userCurrentLoc.getLongitude(), Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(getContext(),ElectricianNearByActivity.class);
-                        intent.putExtra("latitude", userCurrentLoc.getLatitude());
-                        intent.putExtra("longitude", userCurrentLoc.getLongitude());
-                        startActivity(intent);
+                        locationRes=true;
                     }
                     else{
                         Toast.makeText(getContext(), "Location not found", Toast.LENGTH_SHORT).show();

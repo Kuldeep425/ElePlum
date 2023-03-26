@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -123,12 +124,14 @@ public class OTPVerificationActivity extends AppCompatActivity {
                     }
                 });
     }
-
+   String userId=dbReference.child("users").push().getKey();
     private void saveUserDataInDatabase(User signUpUser) {
-        dbReference.child("User").push().setValue(signUpUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+        dbReference.child("users").child(userId).setValue(signUpUser).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                if(task.isSuccessful()){
+                   String uniqueId=dbReference.child("users").getKey();
+                   Log.d("Unique Id: ",uniqueId);
                    Toast.makeText(OTPVerificationActivity.this, "added to database", Toast.LENGTH_SHORT).show();
                }
                else{

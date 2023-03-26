@@ -55,10 +55,9 @@ public class ElectricianNearByGoogleMapFragment extends Fragment implements OnMa
        // mapView=rootview.findViewById(R.id.mapview);
     }
 
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(0, 0))
-                .title("Marker"));
+
     }
 }
