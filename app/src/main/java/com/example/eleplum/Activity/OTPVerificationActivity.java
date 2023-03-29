@@ -18,7 +18,9 @@ import com.example.eleplum.Models.User;
 import com.example.eleplum.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -97,7 +99,9 @@ public class OTPVerificationActivity extends AppCompatActivity {
     private void verifyOtp(String code) {
         // getting credential for verification id and code
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+
         signInWithCredential(credential);
+
 
     }
 
@@ -114,7 +118,8 @@ public class OTPVerificationActivity extends AppCompatActivity {
                             Toast.makeText(OTPVerificationActivity.this, "Verified", Toast.LENGTH_LONG).show();
                             // method to call to save the user data in database
                             saveUserDataInDatabase(signUpUser);
-                            startActivity(new Intent(OTPVerificationActivity.this,MainActivityUser.class));
+                            Intent intent=new Intent(OTPVerificationActivity.this,MainActivityUser.class);
+                            startActivity(intent);
                             finish();
                         } else {
                             // if the code is not correct then we are
@@ -124,9 +129,10 @@ public class OTPVerificationActivity extends AppCompatActivity {
                     }
                 });
     }
-   String userId=dbReference.child("users").push().getKey();
-    private void saveUserDataInDatabase(User signUpUser) {
-        dbReference.child("users").child(userId).setValue(signUpUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+       private void saveUserDataInDatabase(User signUpUser) {
+           String userId=dbReference.child("users").push().getKey();
+          dbReference.child("users").child(userId).setValue(signUpUser).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                if(task.isSuccessful()){
@@ -136,8 +142,10 @@ public class OTPVerificationActivity extends AppCompatActivity {
                }
                else{
                    Toast.makeText(OTPVerificationActivity.this, "unable to add in database", Toast.LENGTH_SHORT).show();
+
                }
             }
         });
     }
 }
+
