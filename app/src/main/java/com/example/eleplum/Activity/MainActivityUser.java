@@ -18,6 +18,7 @@ public class MainActivityUser extends AppCompatActivity {
     LinearLayout homeLayout,chatLayout,notificationLayout,callLayout;
     ImageView homeImageview,chatImageview,notificationImageview,callImageview;
     TextView homeTextview,notificationTextview,chatTextview,callTextview;
+    Double latitude,longitude;
     private int selectedTab=1; // we have 4 tab (home,notification ,chat and call) but by default the home would be selected
     @Override
     protected void onCreate( Bundle savedInstanceState) {
