@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.eleplum.Models.User;
 import com.example.eleplum.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,15 +34,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
-     // Login page data fields
-     Button logBtn;
-     EditText phoneNo;
-     EditText password;
-     TextView signUp;
-     FirebaseAuth auth;
+     EditText phoneNumberEdtTxt,passwordEdtTxt;
+     TextView gotoSignUp;
+     String contactNumber,password;
+     Button signInBtn;
+     FirebaseAuth  mAuth;
+     FirebaseDatabase database;
      DatabaseReference reference;
-
-
      @Override
      protected void onCreate(@Nullable Bundle savedInstanceState) {
           super.onCreate(savedInstanceState);
@@ -47,18 +48,19 @@ public class LoginActivity extends AppCompatActivity {
           //Initialize all data fields
           initialization();
           // on clicking Sign Up move to SignUpActivity
-          signUp.setOnClickListener(new View.OnClickListener() {
+          gotoSignUp.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
                     Intent intent= new Intent(LoginActivity.this,SignUpActivity.class);
                     startActivity(intent);
+                    finish();
                }
           });
           // on clicking Login
-          logBtn.setOnClickListener(new View.OnClickListener() {
+          signInBtn.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
-                         loginUser();
+                    loginUser();
                }
           });
 
@@ -67,17 +69,14 @@ public class LoginActivity extends AppCompatActivity {
 
      private void loginUser() {
        // validate login info
-          if (!validateUser() || !validatePassword()){
-               return;
-          }else{
-               isUser();
+          if (isFieldsValid()){
+               // calling login to user function to login the user once the fields are valid
+               loginToUser();
           }
-               
-          
      }
 
-     private void isUser() {
-          String input=password.getText().toString()+phoneNo.getText().toString();
+     private void loginToUser() {
+          String input=passwordEdtTxt.getText().toString()+phoneNumberEdtTxt.getText().toString();
           System.out.println(input);
           reference=FirebaseDatabase.getInstance().getReference("ElePlum/users");
           Query checkUser=reference.orderByChild("phonePass").equalTo(input);
@@ -101,38 +100,29 @@ public class LoginActivity extends AppCompatActivity {
 
      }
 
-     private boolean validatePassword() {
-          String val=password.getText().toString();
-
-          if(val.isEmpty()){
-//               password.setError("Field cannot be empty");
-               return false;
-          }else{
-//               password.setError(null);
-//               password.setErrorEnabled(false);
-               return true;
-          }
-     }
-
-     private boolean validateUser() {
-          String val=phoneNo.getText().toString();
-          if(val.isEmpty()){
-//               phoneNo.setError("Field cannot be empty");
-               return false;
-          }else{
-//               phoneNo.setError(null);
-//               phoneNo.setErrorEnabled(false);
-               return true;
-          }
-     }
-
-
      private void initialization() {
-          logBtn=findViewById(R.id.loginBtn);
-          phoneNo=findViewById(R.id.phoneTxt);
-          password=findViewById(R.id.passwordTxt);
-          signUp=findViewById(R.id.signUpTxt);
-          auth=FirebaseAuth.getInstance();
-          reference= FirebaseDatabase.getInstance().getReference("ElePum");
+          signInBtn = findViewById(R.id.loginBtn);
+          phoneNumberEdtTxt = findViewById(R.id.phoneTxt);
+          passwordEdtTxt = findViewById(R.id.passwordTxt);
+          gotoSignUp = findViewById(R.id.signUpTxt);
+          mAuth = FirebaseAuth.getInstance();
+          reference = FirebaseDatabase.getInstance().getReference("ElePum");
      }
+
+
+     private boolean isFieldsValid() {
+          contactNumber=phoneNumberEdtTxt.getText().toString().trim();
+          password=passwordEdtTxt.getText().toString().trim();
+          if(contactNumber.length()!=10){
+               Toast.makeText(this, "Invalid Phone number", Toast.LENGTH_SHORT).show();
+               return false;
+          }
+          if(password.length()<8){
+               Toast.makeText(this, "Password should be minimum 8 characters", Toast.LENGTH_SHORT).show();
+               return false;
+          }
+          return true;
+     }
+
+
 }

@@ -7,7 +7,7 @@ public class User implements Serializable {
     private String phoneNumber;
     private String password;
     private String phonePass;
-   // private  String id;
+
 
     public User(String name, String phoneNumber, String password,String phonePass) {
         this.name = name;

@@ -97,16 +97,12 @@ public class SignUpActivity extends AppCompatActivity {
                 // clear all fields
                  makeEmptyAttributes();
                  // change activity to otp verification
-
                 Intent intOtp=new Intent(SignUpActivity.this,OTPVerificationActivity.class);
                 intOtp.putExtra("signUpData",user);
                 intOtp.putExtra("verId",verificationId);
-               // intOtp.putExtra("ifUser",isUser);
+                System.out.println(verificationId+" "+token);
                 startActivity(intOtp);
 
-                // Save verification ID and resending token so we can use them later
-//                mVerificationId = verificationId;
-//                mResendToken = token;
             }
         };
 
@@ -191,8 +187,7 @@ public class SignUpActivity extends AppCompatActivity {
     // method to register a user
     private void registerAUser() {
         if(isValidData(1)){
-             user=new User(name,phoneNumber,password,password+phoneNumber);
-
+            user=new User(name,phoneNumber,password,password+phoneNumber);
             PhoneAuthOptions options =
                     PhoneAuthOptions.newBuilder(authInstance)
                             .setPhoneNumber("+91"+phoneNumber)       // Phone number to verify
@@ -202,6 +197,10 @@ public class SignUpActivity extends AppCompatActivity {
                             .build();
             PhoneAuthProvider.verifyPhoneNumber(options);
         }
+    }
+    // go to login page
+    public void goToLoginPage(View v){
+        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
     }
 
     private void initializeTheComponents() {
