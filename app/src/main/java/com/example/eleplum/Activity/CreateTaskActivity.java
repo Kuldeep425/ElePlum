@@ -1,5 +1,6 @@
 package com.example.eleplum.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.location.Address;
@@ -12,11 +13,21 @@ import android.widget.Toast;
 
 import com.example.eleplum.Fragments.HomeUserFragment;
 import com.example.eleplum.R;
+import com.example.eleplum.Utils.NotificationSender;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
+import java.util.UUID;
 
 public class CreateTaskActivity extends AppCompatActivity {
 
@@ -33,12 +44,13 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         initialize();
 
+        // subscribe the topic to get the notification from that topic
+        subscribeTopicToGetNotification();
+
 
         // get latitude and longitude
         latitude=getIntent().getDoubleExtra("latitude",0);
         longitude=getIntent().getDoubleExtra("longitude",0);
-
-        System.out.println(latitude + " " +longitude );
 
         // initialize geocoder
         geocoder=new Geocoder(this, Locale.getDefault());
@@ -55,14 +67,52 @@ public class CreateTaskActivity extends AppCompatActivity {
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 validateInputFields();
+                taskDesc=taskTxt.getText().toString().trim();
+                time=timeTxt.getText().toString().trim();
+                date=dateTxt.getText().toString().trim();
+                address=addressTxt.getText().toString().trim();
+                if(validateInputFields()){
+                  //creating notification message
+                    NotificationSender notificationSender=new NotificationSender("/topics/notification",date,address,getApplicationContext(),CreateTaskActivity.this);
+                    notificationSender.sendNotification();
+                }
             }
         });
 
     }
 
-    private boolean validateInputFields() {
+    // subscribe topic to get notification
+    private void subscribeTopicToGetNotification() {
+        FirebaseMessaging.getInstance().subscribeToTopic("notification")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(CreateTaskActivity.this, "Subscribed", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(CreateTaskActivity.this, "Some Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
 
+    private boolean validateInputFields() {
+        if(taskDesc.length()==0){
+            Toast.makeText(this, "Please add task description", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(time.length()==0){
+            Toast.makeText(this, "time add a time", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(date.length()==0){
+            Toast.makeText(this, "Please add a date", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(address.length()==0){
+            Toast.makeText(this, "Address not found", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 
