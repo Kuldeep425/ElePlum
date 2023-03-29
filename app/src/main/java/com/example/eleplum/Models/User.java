@@ -6,11 +6,15 @@ public class User implements Serializable {
     private String name;
     private String phoneNumber;
     private String password;
+    private String phonePass;
+   // private  String id;
 
-    public User(String name, String phoneNumber, String password) {
+    public User(String name, String phoneNumber, String password,String phonePass) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.phonePass=phonePass;
+        //this.id=id;
     }
 
     public User() {
@@ -38,5 +42,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhonePass() {
+        return phonePass;
+    }
+
+    public void setPhonePass(String phonePass) {
+        this.phonePass = phonePass;
     }
 }

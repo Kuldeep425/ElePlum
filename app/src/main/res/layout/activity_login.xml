@@ -26,6 +26,7 @@
         android:textStyle="bold"
         android:letterSpacing="0.03"/>
     <EditText
+        android:id="@+id/phoneTxt"
         android:layout_width="350dp"
         android:layout_height="45dp"
         android:hint="Contact no."
@@ -43,6 +44,7 @@
 
         />
     <EditText
+        android:id="@+id/passwordTxt"
         android:layout_width="350dp"
         android:layout_height="45dp"
         android:hint="Password"
@@ -68,6 +70,7 @@
 
             />
      <Button
+         android:id="@+id/loginBtn"
          android:layout_width="350dp"
          android:layout_height="50dp"
          android:layout_gravity="center"
@@ -90,6 +93,7 @@
              android:layout_marginLeft="100dp"
             />
         <TextView
+            android:id="@+id/signUpTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign Up"
