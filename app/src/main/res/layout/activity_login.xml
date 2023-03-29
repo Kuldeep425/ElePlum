@@ -27,38 +27,36 @@
         android:letterSpacing="0.03"/>
 
     <EditText
-        android:id="@+id/contactNumber"
+        android:id="@+id/phoneTxt"
         android:layout_width="350dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
+        android:paddingLeft="5dp"
         android:background="@drawable/bg_edittext"
         android:drawableStart="@drawable/ic_phone"
         android:drawablePadding="12dp"
-        android:ems="10"
-        android:hint="Contact no."
-        android:inputType="textEmailAddress"
-        android:paddingLeft="5dp"
-        android:textColor="@color/black"
+        android:hint="Phone number"
+        android:inputType="number"
         android:textSize="16sp"
-
-        android:textStyle="normal" />
-
+        android:textColor="@color/black"
+        />
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/passwordTxt"
         android:layout_width="350dp"
         android:layout_height="45dp"
-        android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:hint="Password"
         android:background="@drawable/bg_edittext"
         android:drawableStart="@drawable/ic_lock"
         android:drawablePadding="12dp"
-        android:hint="Password"
-
+        android:ems="10"
         android:paddingLeft="5dp"
-        android:textColor="#0d6e6a"
+        android:textColor="@color/black"
         android:textSize="16sp"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +65,6 @@
             android:textColor="@color/login_color"
             android:textStyle="bold"
             android:layout_marginTop="20dp"
-
             />
      <Button
          android:id="@+id/loginBtn"
@@ -93,6 +90,7 @@
              android:layout_marginLeft="100dp"
             />
         <TextView
+            android:id="@+id/signUpTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign Up"

@@ -19,9 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eleplum.Models.User;
 import com.example.eleplum.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseAppLifecycleListener;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -66,8 +69,6 @@ public class SignUpActivity extends AppCompatActivity {
                 //     detect the incoming verification SMS and perform verification without
                 //     user action.
                 Log.d(TAG, "onVerificationCompleted:" + credential);
-
-                signInWithPhoneAuthCredential(credential);
             }
 
             @Override
@@ -137,7 +138,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if(isCheckBox==false){
                     // calling method to register a user
-
+                    isUser=true;
                     registerAUser();
                 }
                 else{
@@ -160,10 +161,6 @@ public class SignUpActivity extends AppCompatActivity {
         passwordTxt.getText().clear();
 
     }
-
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-    }
-
     // method to verify the data provided by the user
 
     boolean isValidData(int isUser){
@@ -184,13 +181,13 @@ public class SignUpActivity extends AppCompatActivity {
 
     // method to register an electrician
     private void registerAnElectrician() {
+
     }
 
     // method to register a user
     private void registerAUser() {
         if(isValidData(1)){
-             user=new User(name,phoneNumber,password,phoneNumber+password);
-
+            user=new User(name,phoneNumber,password,password+phoneNumber);
             PhoneAuthOptions options =
                     PhoneAuthOptions.newBuilder(authInstance)
                             .setPhoneNumber("+91"+phoneNumber)       // Phone number to verify
