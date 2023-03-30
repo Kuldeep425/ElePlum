@@ -3,6 +3,7 @@ package com.example.eleplum.Models;
 import java.io.Serializable;
 
 public class User implements Serializable {
+    private String userId;
     private String name;
     private String phoneNumber;
     private String password;
@@ -14,7 +15,6 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.phonePass=phonePass;
-        //this.id=id;
     }
 
     public User() {
@@ -50,5 +50,13 @@ public class User implements Serializable {
 
     public void setPhonePass(String phonePass) {
         this.phonePass = phonePass;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

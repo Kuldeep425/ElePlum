@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
      FirebaseAuth  mAuth;
      FirebaseDatabase database;
      DatabaseReference reference;
+     public static String userId;
      @Override
      protected void onCreate(@Nullable Bundle savedInstanceState) {
           super.onCreate(savedInstanceState);
@@ -85,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
                          Intent intent= new Intent(LoginActivity.this,MainActivityUser.class);
+                         userId=snapshot.getValue(User.class).getUserId();
                          startActivity(intent);
                          finish();
                     }else {

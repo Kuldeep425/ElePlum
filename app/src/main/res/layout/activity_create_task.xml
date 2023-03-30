@@ -34,7 +34,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:hint="Type about task max 50 characters"
+            android:hint="Type about task max 200 characters"
             app:helperText="Required*"
             app:helperTextEnabled="true"
             app:helperTextTextColor="#D50000"
