@@ -16,6 +16,7 @@ import com.example.eleplum.Fragments.ElectricianNearByFragment;
 import com.example.eleplum.Fragments.ElectricianNearByGoogleMapFragment;
 import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.R;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 
 public class ElectricianNearByActivity extends  AppCompatActivity {
 
