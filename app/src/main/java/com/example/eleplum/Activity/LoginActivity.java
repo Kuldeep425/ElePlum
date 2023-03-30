@@ -3,6 +3,7 @@ package com.example.eleplum.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -85,8 +86,12 @@ public class LoginActivity extends AppCompatActivity {
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
+                         for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                              User user=dataSnapshot.getValue(User.class);
+                              userId=user.getUserId();
+                              System.out.println(userId);
+                         }
                          Intent intent= new Intent(LoginActivity.this,MainActivityUser.class);
-                         userId=snapshot.getValue(User.class).getUserId();
                          startActivity(intent);
                          finish();
                     }else {

@@ -48,6 +48,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_task);
 
+        Log.d("UserId",userId);
         initialize();
 
         // subscribe the topic to get the notification from that topic

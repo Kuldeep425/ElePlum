@@ -71,5 +71,7 @@ dependencies {
 
     // volley to send notification using volley RequestQueue
     implementation 'com.android.volley:volley:1.2.1'
+    // to load image from url
+    implementation 'com.squareup.picasso:picasso:2.8'
 
 }

@@ -3,6 +3,7 @@ package com.example.eleplum.Utils;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -40,15 +41,6 @@ public class NotificationSender {
         this.activity = activity;
     }
 
-//    public NotificationSender(String userToken, String title, String body, Context context, Activity activity,Double longitude,Double latitude) {
-//        this.userToken = userToken;
-//        this.title = title;
-//        this.body = body;
-//        this.context = context;
-//        this.activity = activity;
-//        this.latitude=latitude;
-//        this.longitude=longitude;
-//    }
 
     // method to send the notification
     public void sendNotification(){
@@ -67,12 +59,14 @@ public class NotificationSender {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.d("Result","Sent");
+                    Toast.makeText(context, "sent", Toast.LENGTH_SHORT).show();
                     Log.d("Result",response.toString());
 
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
                     Log.d("Result","Error in sending");
                 }
             }){
