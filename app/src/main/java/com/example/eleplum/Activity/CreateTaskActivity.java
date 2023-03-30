@@ -1,5 +1,7 @@
 package com.example.eleplum.Activity;
 
+import static com.example.eleplum.Activity.LoginActivity.userId;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,11 +14,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.eleplum.Fragments.HomeUserFragment;
+import com.example.eleplum.Models.CreatedTask;
 import com.example.eleplum.R;
 import com.example.eleplum.Utils.NotificationSender;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -36,6 +41,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     Double latitude,longitude;
     Button createBtn;
     String taskDesc,time,date,address;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +78,32 @@ public class CreateTaskActivity extends AppCompatActivity {
                 date=dateTxt.getText().toString().trim();
                 address=addressTxt.getText().toString().trim();
                 if(validateInputFields()){
-                  //creating notification message
-                    NotificationSender notificationSender=new NotificationSender("/topics/notification",date,address,getApplicationContext(),CreateTaskActivity.this);
-                    notificationSender.sendNotification();
+                    // add task to database
+                    addCreatedTaskToDatabase();
                 }
             }
         });
+
+    }
+
+    // method to add created task to add database
+    private void addCreatedTaskToDatabase() {
+          databaseReference= FirebaseDatabase.getInstance().getReference("ElePlum");
+          String taskId=databaseReference.child("Tasks").push().getKey();
+          CreatedTask createdTask=new CreatedTask(taskId,userId,latitude,longitude,time,date,taskDesc,address);
+          databaseReference.child("Tasks").child(taskId).setValue(createdTask).addOnCompleteListener(new OnCompleteListener<Void>() {
+              @Override
+              public void onComplete(@NonNull Task<Void> task) {
+                  if(task.isSuccessful()){
+                      // if the created task successfully stored into database  sends notification to nearby electricians
+
+                      //creating notification message
+                      NotificationSender notificationSender=new NotificationSender("/topics/notification",date,address,getApplicationContext(),CreateTaskActivity.this);
+                      //sending notification
+                      notificationSender.sendNotification();
+                  }
+              }
+          });
 
     }
 
@@ -99,6 +125,10 @@ public class CreateTaskActivity extends AppCompatActivity {
     private boolean validateInputFields() {
         if(taskDesc.length()==0){
             Toast.makeText(this, "Please add task description", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(taskDesc.length()>200){
+            Toast.makeText(this, "maximum limit of 200 characters for task description", Toast.LENGTH_LONG).show();
             return false;
         }
         if(time.length()==0){

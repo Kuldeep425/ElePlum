@@ -25,6 +25,8 @@ public class NotificationSender {
     String body;
     Context context;
     Activity activity;
+    Double latitude;
+    Double longitude;
 
     private RequestQueue requestQueue;
     private final String postUrl="https://fcm.googleapis.com/fcm/send";
@@ -37,6 +39,16 @@ public class NotificationSender {
         this.context = context;
         this.activity = activity;
     }
+
+//    public NotificationSender(String userToken, String title, String body, Context context, Activity activity,Double longitude,Double latitude) {
+//        this.userToken = userToken;
+//        this.title = title;
+//        this.body = body;
+//        this.context = context;
+//        this.activity = activity;
+//        this.latitude=latitude;
+//        this.longitude=longitude;
+//    }
 
     // method to send the notification
     public void sendNotification(){
