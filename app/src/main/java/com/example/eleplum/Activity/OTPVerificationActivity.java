@@ -132,12 +132,11 @@ public class OTPVerificationActivity extends AppCompatActivity {
 
        private void saveUserDataInDatabase(User signUpUser) {
            String userId=dbReference.child("users").push().getKey();
+           signUpUser.setUserId(userId);
           dbReference.child("users").child(userId).setValue(signUpUser).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                if(task.isSuccessful()){
-                   String uniqueId=dbReference.child("users").getKey();
-                   Log.d("Unique Id: ",uniqueId);
                    Toast.makeText(OTPVerificationActivity.this, "added to database", Toast.LENGTH_SHORT).show();
                }
                else{
