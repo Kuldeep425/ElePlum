@@ -8,6 +8,7 @@ public class Electrician {
     private Double longitude;
     private Double rating;
     private String imageURL;
+    private String phone;
 
     public String getElectricianId() {
         return ElectricianId;
@@ -63,5 +64,13 @@ public class Electrician {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
