@@ -141,6 +141,7 @@ public class AdminElectricianVerifiedActivity extends AppCompatActivity implemen
             public void onClick(View view) {
                 if(isValid()){
                     savePasswordToDatabase(electrician);
+                  //  new SMSSenderUtil().sendSMS(electrician.getPhone(),dialogPassword+"is your password",AdminElectricianVerifiedActivity.this);
                     dialog.dismiss();
                 }
             }
@@ -152,12 +153,13 @@ public class AdminElectricianVerifiedActivity extends AppCompatActivity implemen
     // method by admin to save the electrician password
     private void savePasswordToDatabase(Electrician electrician) {
         boolean isPasswordSaved=false;
-        databaseReference.child("pendingElectrician").child(electrician.getElectricianId()).child("password").setValue(dialogPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("pendingElectrician").child(electrician.getElectricianId()).child("phonePass").setValue(dialogPassword+electrician.getPhone()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
                     // set password
                     electrician.setPassword(dialogPassword);
+                    electrician.setPhonePass(dialogPassword+electrician.getPhone());
                     // once the admin save the password for electrician means simply verified
                     // move pendingElectrician to Electrician
                     Toast.makeText(AdminElectricianVerifiedActivity.this, "password saved", Toast.LENGTH_SHORT).show();
