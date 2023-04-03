@@ -140,8 +140,8 @@ public class AdminElectricianVerifiedActivity extends AppCompatActivity implemen
             @Override
             public void onClick(View view) {
                 if(isValid()){
-                    //savePasswordToDatabase(electrician);
-                    new SMSSenderUtil().sendSMS(electrician.getPhone(),dialogPassword+"is your password",AdminElectricianVerifiedActivity.this);
+                    savePasswordToDatabase(electrician);
+                  //  new SMSSenderUtil().sendSMS(electrician.getPhone(),dialogPassword+"is your password",AdminElectricianVerifiedActivity.this);
                     dialog.dismiss();
                 }
             }
@@ -159,6 +159,7 @@ public class AdminElectricianVerifiedActivity extends AppCompatActivity implemen
                 if(task.isSuccessful()){
                     // set password
                     electrician.setPassword(dialogPassword);
+                    electrician.setPhonePass(dialogPassword+electrician.getPhone());
                     // once the admin save the password for electrician means simply verified
                     // move pendingElectrician to Electrician
                     Toast.makeText(AdminElectricianVerifiedActivity.this, "password saved", Toast.LENGTH_SHORT).show();

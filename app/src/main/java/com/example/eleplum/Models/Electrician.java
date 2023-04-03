@@ -9,6 +9,7 @@ public class Electrician {
     private Double rating;
     private String imageURL;
     private String phone;
+    private String phonePass;
 
     public String getElectricianId() {
         return ElectricianId;
@@ -72,5 +73,13 @@ public class Electrician {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getPhonePass() {
+        return phonePass;
+    }
+
+    public void setPhonePass(String phonePass) {
+        this.phonePass = phonePass;
     }
 }
