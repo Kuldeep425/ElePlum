@@ -1,7 +1,11 @@
 package com.example.eleplum.Models;
 
-public class Electrician {
-    private String ElectricianId;
+
+import java.io.Serializable;
+
+
+public class Electrician implements Serializable {
+    private String electricianId;
     private String name;
     private String password;
     private Double latitude;
@@ -11,14 +15,12 @@ public class Electrician {
     private String phone;
     private String phonePass;
 
-    public String getElectricianId() {
-        return ElectricianId;
+    public Electrician(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
     }
-
-    public void setElectricianId(String electricianId) {
-        ElectricianId = electricianId;
+    public Electrician(){
     }
-
     public String getName() {
         return name;
     }
@@ -27,6 +29,12 @@ public class Electrician {
         this.name = name;
     }
 
+    public void setElectricianId(String electricianId) {
+        this.electricianId = electricianId;
+    }
+    public String getElectricianId(){
+        return electricianId;
+    }
     public String getPassword() {
         return password;
     }

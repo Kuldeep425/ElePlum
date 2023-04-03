@@ -32,15 +32,15 @@ public class EleMainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id= item.getItemId();
                 if(id==R.id.nav_home){
-                    loadFragment(new EleHomeFragment(),true);
+                    loadFragment(new EleHomeFragment());
                 }else if(id==R.id.nav_post){
-                    loadFragment(new ElePostFragment(),false);
+                    loadFragment(new ElePostFragment());
                 } else if(id==R.id.nav_notification) {
-                    loadFragment(new EleNotificationFragment(),false);
+                    loadFragment(new EleNotificationFragment());
                 }else if (id==R.id.nav_chat) {
-                        loadFragment(new EleChatFragment(),false);
+                        loadFragment(new EleChatFragment());
                     }else{
-                        loadFragment(new EleCallFragment(),false);
+                        loadFragment(new EleCallFragment());
                     }
 
                 return true;
@@ -49,14 +49,14 @@ public class EleMainActivity extends AppCompatActivity {
         bnView.setSelectedItemId(R.id.nav_home);
     }
 
-    private void loadFragment(Fragment fragment,boolean flag) {
+    private void loadFragment(Fragment fragment) {
         FragmentManager fm=getSupportFragmentManager();
-        FragmentTransaction ft=fm.beginTransaction();
-        if(flag) {
+        FragmentTransaction ft=fm.beginTransaction().setReorderingAllowed(true);
+
             ft.add(R.id.frameLayout, fragment);
-        }else{
+
             ft.replace(R.id.frameLayout,fragment);
-        }
+
         ft.commit();
     }
 

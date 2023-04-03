@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.chaos.view.PinView;
+import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.Models.User;
 import com.example.eleplum.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,12 +35,14 @@ import com.google.firebase.ktx.Firebase;
 public class OTPVerificationActivity extends AppCompatActivity {
     TextView phoneTextView;
     User signUpUser;
+    Electrician signUpElectrician;
     Button verifyOtpBtn;
     PinView pinView;
     String otp,verificationId;
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference dbReference;
+    boolean isUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +51,20 @@ public class OTPVerificationActivity extends AppCompatActivity {
         // hide app bar in this activity
         getSupportActionBar().hide();
         //To retrieve signUpData in OTPVerification Activity
-        signUpUser=(User)getIntent().getSerializableExtra("signUpData");
-        // calling
         phoneTextView=findViewById(R.id.otpTextView);
-        String message=phoneTextView.getText().toString()+signUpUser.getPhoneNumber();
-        phoneTextView.setText(message);
+        isUser=(boolean)getIntent().getBooleanExtra("isUser",isUser);
+        if(isUser) {
+            signUpUser = (User) getIntent().getSerializableExtra("signUpData");
+            String message=phoneTextView.getText().toString()+signUpUser.getPhoneNumber();
+            phoneTextView.setText(message);
+        }else{
+            signUpElectrician=(Electrician) getIntent().getSerializableExtra("signUpDataElectrician");
+            String message=phoneTextView.getText().toString()+signUpElectrician.getPhone();
+            phoneTextView.setText(message);
+        }
+        // calling
+
+
         //
         verifyOtpBtn=findViewById(R.id.verifyOtpBtn);
         //
@@ -117,8 +129,17 @@ public class OTPVerificationActivity extends AppCompatActivity {
                             // we are sending our user to new activity.
                             Toast.makeText(OTPVerificationActivity.this, "Verified", Toast.LENGTH_LONG).show();
                             // method to call to save the user data in database
-                            saveUserDataInDatabase(signUpUser);
-                            Intent intent=new Intent(OTPVerificationActivity.this,MainActivityUser.class);
+                            if (isUser) {
+                                saveUserDataInDatabase(signUpUser);
+                            } else {
+                                saveUserDataInDatabase(signUpElectrician);
+                            }
+                            Intent intent;
+                            if (isUser) {
+                                 intent = new Intent(OTPVerificationActivity.this, MainActivityUser.class);
+                            } else{
+                                 intent = new Intent(OTPVerificationActivity.this, EleMainActivity.class);
+                        }
                             startActivity(intent);
                             finish();
                         } else {
@@ -143,6 +164,22 @@ public class OTPVerificationActivity extends AppCompatActivity {
                    Toast.makeText(OTPVerificationActivity.this, "unable to add in database", Toast.LENGTH_SHORT).show();
 
                }
+            }
+        });
+    }
+    private void saveUserDataInDatabase(Electrician signUpElectrician) {
+        String electricianId=dbReference.child("pendingElectrcian").push().getKey();
+       signUpElectrician.setElectricianId(electricianId);
+        dbReference.child("pendingElectrician").child(electricianId).setValue(signUpElectrician).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(OTPVerificationActivity.this, "added  elec to database", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(OTPVerificationActivity.this, "unable to add elec in database", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
     }
