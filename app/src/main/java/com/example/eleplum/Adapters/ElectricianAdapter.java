@@ -41,8 +41,8 @@ public class ElectricianAdapter extends RecyclerView.Adapter<ElectricianAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ElectricianAdapter.ViewHolder holder, int position) {
-       Electrician electrician=electricians.get(position);
 
+        Electrician electrician=electricians.get(position);
         Picasso.get().load(electrician.getImageURL()).into(holder.image);
         holder.name.setText(electrician.getName());
         holder.rating.setText(electrician.getRating()+"");
