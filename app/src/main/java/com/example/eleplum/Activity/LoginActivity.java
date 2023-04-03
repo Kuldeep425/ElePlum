@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.view.View;
 import android.widget.Button;
@@ -42,12 +43,26 @@ public class LoginActivity extends AppCompatActivity {
      FirebaseDatabase database;
      DatabaseReference reference;
      public static String userId;
+     CheckBox loginEleBox;
+     boolean isLoginEle;
      @Override
      protected void onCreate(@Nullable Bundle savedInstanceState) {
           super.onCreate(savedInstanceState);
           setContentView(R.layout.activity_login);
           //Initialize all data fields
           initialization();
+          //listener on checkbox to login as electrician
+          loginEleBox.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                    if(isLoginEle==false){
+                         isLoginEle=true;
+                    }else{
+                         isLoginEle=false;
+                    }
+               }
+          });
+
           // on clicking Sign Up move to SignUpActivity
           gotoSignUp.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -61,11 +76,45 @@ public class LoginActivity extends AppCompatActivity {
           signInBtn.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
-                    loginUser();
+                    if(isLoginEle==false) {
+                         loginUser();
+                    }else{
+                         loginElectrician();
+                    }
                }
           });
 
 
+     }
+
+     private void loginElectrician() {
+          if (isFieldsValid()){
+               // calling login to user function to login the user once the fields are valid
+               loginToElectrician();
+          }
+     }
+
+     private void loginToElectrician() {
+          String input=passwordEdtTxt.getText().toString()+phoneNumberEdtTxt.getText().toString();
+          reference=FirebaseDatabase.getInstance().getReference("ElePlum/Electrician");
+          Query checkElectrician=reference.orderByChild("phonePass").equalTo(input);
+          checkElectrician.addListenerForSingleValueEvent(new ValueEventListener() {
+               @Override
+               public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                         Intent intent =new Intent(LoginActivity.this,EleMainActivity.class);
+                         startActivity(intent);
+                         finish();
+                    }else{
+                         Toast.makeText(LoginActivity.this, "login failed", Toast.LENGTH_SHORT).show();
+                    }
+               }
+
+               @Override
+               public void onCancelled(@NonNull DatabaseError error) {
+
+               }
+          });
      }
 
      private void loginUser() {
@@ -109,6 +158,7 @@ public class LoginActivity extends AppCompatActivity {
           gotoSignUp = findViewById(R.id.signUpTxt);
           mAuth = FirebaseAuth.getInstance();
           reference = FirebaseDatabase.getInstance().getReference("ElePum");
+          loginEleBox=findViewById(R.id.checkBox);
      }
 
 

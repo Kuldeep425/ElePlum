@@ -17,9 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ElePlum"
         tools:targetApi="31">
-        <activity
-            android:name=".EleMainActivity"
-            android:exported="false" />
+
         <!-- This is for firebase notification -->
         <service
             android:name=".Utils.MyFirebaseMessagingService"
@@ -52,7 +50,11 @@
         <activity
             android:name=".Activity.LoginActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Activity.SignUpActivity"
@@ -62,11 +64,7 @@
             android:exported="true"></activity>
         <activity android:name=".Activity.EleMainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
