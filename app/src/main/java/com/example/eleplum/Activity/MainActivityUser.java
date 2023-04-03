@@ -1,5 +1,8 @@
 package com.example.eleplum.Activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -7,9 +10,13 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import com.example.eleplum.Fragments.ChatFragment;
 import com.example.eleplum.Fragments.HomeUserFragment;
 import com.example.eleplum.R;
 
@@ -17,6 +24,7 @@ public class MainActivityUser extends AppCompatActivity {
     LinearLayout homeLayout,chatLayout,notificationLayout,callLayout;
     ImageView homeImageview,chatImageview,notificationImageview,callImageview;
     TextView homeTextview,notificationTextview,chatTextview,callTextview;
+    Double latitude,longitude;
     private int selectedTab=1; // we have 4 tab (home,notification ,chat and call) but by default the home would be selected
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -28,6 +36,9 @@ public class MainActivityUser extends AppCompatActivity {
 
         // calling method to initialize the components
          initialiazeTheComponents();
+
+         // get notification permission
+        getNotificationPerm();
 
          // set home fragment by default
           getSupportFragmentManager().beginTransaction()
@@ -189,6 +200,25 @@ public class MainActivityUser extends AppCompatActivity {
 
 
 
+    }
+
+    // get notification permission
+    private void getNotificationPerm() {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU){
+            int notifPer= ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS);
+            if(notifPer!= PackageManager.PERMISSION_GRANTED){
+                String [] perm={Manifest.permission.POST_NOTIFICATIONS};
+                ActivityCompat.requestPermissions(this,perm,100);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==100){
+            Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // method to initializing the widgets,components,layout etc.

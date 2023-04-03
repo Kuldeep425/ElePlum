@@ -1,7 +1,9 @@
 package com.example.eleplum.Activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -41,5 +43,17 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void setAnimationOnWidgets() {
         appNameTxtView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotateanim));
         appIconImage.startAnimation(AnimationUtils.loadAnimation(this,R.anim.scalelarge));
+        // splash screen code
+        startSpalshScreen();
+    }
+
+    private void startSpalshScreen() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent=new Intent(SplashScreenActivity.this,SignUpActivity.class);
+                startActivity(intent);
+            }
+        },2000);
     }
 }

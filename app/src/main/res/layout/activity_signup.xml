@@ -97,12 +97,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:onClick="goToLoginPage"
         android:text="Already have an account?"
         android:textColor="@color/login_color"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
 
-        />
+        android:textStyle="bold" />
 
 
 

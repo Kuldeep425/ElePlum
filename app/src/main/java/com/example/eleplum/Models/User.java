@@ -1,14 +1,20 @@
 package com.example.eleplum.Models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
+    private String userId;
     private String name;
     private String phoneNumber;
     private String password;
+    private String phonePass;
 
-    public User(String name, String phoneNumber, String password) {
+
+    public User(String name, String phoneNumber, String password,String phonePass) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.phonePass=phonePass;
     }
 
     public User() {
@@ -36,5 +42,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhonePass() {
+        return phonePass;
+    }
+
+    public void setPhonePass(String phonePass) {
+        this.phonePass = phonePass;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
