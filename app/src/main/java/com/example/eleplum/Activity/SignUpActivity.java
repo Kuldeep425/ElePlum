@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.Models.User;
 import com.example.eleplum.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,6 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallback;
     User user;
+    Electrician electrician;
     boolean isUser=true;
 
 
@@ -57,7 +59,6 @@ public class SignUpActivity extends AppCompatActivity {
         // calling method to initializing the components
         initializeTheComponents();
         authInstance = FirebaseAuth.getInstance();
-
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
@@ -68,14 +69,16 @@ public class SignUpActivity extends AppCompatActivity {
                 // 2 - Auto-retrieval. On some devices Google Play services can automatically
                 //     detect the incoming verification SMS and perform verification without
                 //     user action.
-                Log.d(TAG, "onVerificationCompleted:" + credential);
+
+                Toast.makeText(SignUpActivity.this, "verificationCompleted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
-                Log.w(TAG, "onVerificationFailed", e);
+                Toast.makeText(SignUpActivity.this, "verificationFailed", Toast.LENGTH_SHORT).show();
+                System.out.println("failed");
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
@@ -95,25 +98,27 @@ public class SignUpActivity extends AppCompatActivity {
 
                 Log.d(TAG, "onCodeSent:" + verificationId);
                 // clear all fields
-                 makeEmptyAttributes();
-                 // change activity to otp verification
+
+                makeEmptyAttributes();
+                // change activity to otp verification
                 Intent intOtp=new Intent(SignUpActivity.this,OTPVerificationActivity.class);
-                intOtp.putExtra("signUpData",user);
+                if(isUser) {
+                    //Passing user data
+                    user=new User(name,phoneNumber,password,password+phoneNumber);
+                    intOtp.putExtra("signUpData", user);
+                }else{
+                    //Passing electrician data
+                    electrician=new Electrician(name,phoneNumber);
+                    intOtp.putExtra("signUpDataElectrician", electrician);
+                }
+                intOtp.putExtra("isUser",isUser);
                 intOtp.putExtra("verId",verificationId);
                 System.out.println(verificationId+" "+token);
                 startActivity(intOtp);
 
+
             }
         };
-
-
-
-//        if(isShowPass){
-//            phoneNumberTxt.setInputType(InputType.TYPE_CLASS_NUMBER);
-//            isShowPass=true;
-//        }
-
-
         signUpEleBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,7 +140,6 @@ public class SignUpActivity extends AppCompatActivity {
                 name=nameTxt.getText().toString().trim();
                 phoneNumber=phoneNumberTxt.getText().toString().trim();
                 password=passwordTxt.getText().toString().trim();
-
                 if(isCheckBox==false){
                     // calling method to register a user
                     isUser=true;
@@ -151,8 +155,6 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
     private void makeEmptyAttributes() {
@@ -164,30 +166,52 @@ public class SignUpActivity extends AppCompatActivity {
     // method to verify the data provided by the user
 
     boolean isValidData(int isUser){
-        if(name.length()==0){
-            Toast.makeText(this, "Blank user name", Toast.LENGTH_SHORT).show();
-            return false;
+        if(isUser==1) {
+            if (name.length() == 0) {
+                Toast.makeText(this, "Blank user name", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if (phoneNumber.length() != 10) {
+                Toast.makeText(this, "Invalid phone number", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if (isUser == 1 && password.length() < 8) {
+                Toast.makeText(this, "Password should be minimum 8 characters", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
+        }else{
+            if (name.length() == 0) {
+                Toast.makeText(this, "Blank Electrician name", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if (phoneNumber.length() != 10) {
+                Toast.makeText(this, "Invalid phone number", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
         }
-        if(phoneNumber.length()!=10){
-            Toast.makeText(this, "Invalid phone number", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(isUser==1 && password.length()<8){
-            Toast.makeText(this, "Password should be minimum 8 characters", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
     }
 
     // method to register an electrician
     private void registerAnElectrician() {
+        if(isValidData(0)){
+            PhoneAuthOptions options =
+                    PhoneAuthOptions.newBuilder(authInstance)
+                            .setPhoneNumber("+91"+phoneNumber)       // Phone number to verify
+                            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                            .setActivity(this)                 // Activity (for callback binding)
+                            .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                            .build();
+            PhoneAuthProvider.verifyPhoneNumber(options);
+        }
 
     }
 
     // method to register a user
     private void registerAUser() {
         if(isValidData(1)){
-            user=new User(name,phoneNumber,password,password+phoneNumber);
+
             PhoneAuthOptions options =
                     PhoneAuthOptions.newBuilder(authInstance)
                             .setPhoneNumber("+91"+phoneNumber)       // Phone number to verify
@@ -207,6 +231,7 @@ public class SignUpActivity extends AppCompatActivity {
         nameTxt=findViewById(R.id.nameTxt);
         phoneNumberTxt=findViewById(R.id.phoneNumberTxt);
         passwordTxt=findViewById(R.id.passwordTxt);
+
         signUpEleBox=findViewById(R.id.checkBox);
         signUpBtn=findViewById(R.id.signUpBtn);
 

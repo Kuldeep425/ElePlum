@@ -19,6 +19,7 @@
         android:theme="@style/Theme.ElePlum"
         tools:targetApi="31">
 
+
         <!-- Google map api key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
