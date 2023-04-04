@@ -88,26 +88,6 @@ public class ElectricianNearByGoogleMapFragment extends Fragment implements OnMa
                     });
                     i++;
                 }
-//                supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-//                    @Override
-//                    public void onMapReady(GoogleMap googleMap) {
-//                        googleMap.addMarker(new MarkerOptions()
-//                                .position(new LatLng(25.468205,81.821572))
-//                                .title("Me"));
-//                        googleMap.addMarker(new MarkerOptions()
-//                                .position(new LatLng(25.408188,25.408188))
-//                                .title("Me"));
-//                        if(electricianList.size()>0) {
-//                            for (int i = 0; i < electricianList.size(); i++) {
-//                                System.out.println("In loop");
-//                                googleMap.addMarker(new MarkerOptions()
-//                                        .position(new LatLng(electricianList.get(i).getLatitude(), electricianList.get(i).getLongitude()))
-//                                        .title(electricianList.get(i).getName()));
-//                                System.out.println(electricianList.get(i).getName());
-//                            }
-//                        }
-//                    }
-//                });
             }
 
             @Override
