@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.Models.User;
 import com.example.eleplum.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -93,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                // calling login to user function to login the user once the fields are valid
                loginToElectrician();
           }
+
      }
 
      private void loginToElectrician() {
@@ -103,7 +105,23 @@ public class LoginActivity extends AppCompatActivity {
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
-                         Intent intent =new Intent(LoginActivity.this,EleMainActivity.class);
+                         System.out.println(snapshot);
+                         Electrician electrician=null;
+                         for(DataSnapshot d:snapshot.getChildren()) {
+                              electrician = d.getValue(Electrician.class);
+                         }
+                         if(electrician==null){
+                              Toast.makeText(LoginActivity.this, "Electrician not found", Toast.LENGTH_SHORT).show();
+                              return;
+                         }
+                         Intent intent;
+
+                         if(electrician.isProfileCompleted())
+                             intent=new Intent(LoginActivity.this,EleMainActivity.class);
+                         else {
+                              intent = new Intent(LoginActivity.this, EleProfileUpdate.class);
+                              intent.putExtra("electrician",electrician);
+                         }
                          startActivity(intent);
                          finish();
                     }else{
