@@ -47,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
      public static String userId;
      CheckBox loginEleBox;
      boolean isLoginEle;
+     public static double eleLongitude;
+     public static double eleLatitude;
      @Override
      protected void onCreate(@Nullable Bundle savedInstanceState) {
           super.onCreate(savedInstanceState);
@@ -104,8 +106,6 @@ public class LoginActivity extends AppCompatActivity {
           checkElectrician.addListenerForSingleValueEvent(new ValueEventListener() {
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
-                         System.out.println(snapshot);
                          Electrician electrician=null;
                          for(DataSnapshot d:snapshot.getChildren()) {
                               electrician = d.getValue(Electrician.class);
@@ -116,19 +116,18 @@ public class LoginActivity extends AppCompatActivity {
                          }
                          Intent intent;
 
-                         if(electrician.isProfileCompleted())
-                             intent=new Intent(LoginActivity.this,EleMainActivity.class);
+                         if(electrician.isProfileCompleted()) {
+                              intent=new Intent(LoginActivity.this,EleMainActivity.class);
+                              eleLatitude= electrician.getLatitude();
+                              eleLongitude=electrician.getLongitude();
+                         }
                          else {
                               intent = new Intent(LoginActivity.this, EleProfileUpdate.class);
                               intent.putExtra("electrician",electrician);
                          }
                          startActivity(intent);
                          finish();
-                    }else{
-                         Toast.makeText(LoginActivity.this, "login failed", Toast.LENGTH_SHORT).show();
                     }
-               }
-
                @Override
                public void onCancelled(@NonNull DatabaseError error) {
 

@@ -62,6 +62,7 @@ public class EleMainActivity extends AppCompatActivity {
     }
 
     private void initialization() {
+
         bnView=findViewById(R.id.bnView);
     }
 

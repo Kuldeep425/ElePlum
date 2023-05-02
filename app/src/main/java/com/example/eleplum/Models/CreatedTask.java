@@ -23,6 +23,9 @@ public class CreatedTask {
         this.desc = desc;
         this.address=address;
     }
+    public  CreatedTask(){
+
+    }
 
     public String getTaskId() {
         return taskId;
