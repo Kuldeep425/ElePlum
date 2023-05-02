@@ -1,13 +1,16 @@
 package com.example.eleplum.Activity;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static com.google.common.reflect.Reflection.initialize;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -72,18 +75,29 @@ public class EleProfileUpdate extends AppCompatActivity {
             public void onClick(View view) {
                 if(getLocationFromLocationName()){
                     Toast.makeText(EleProfileUpdate.this, "Lat: "+eleLatitude+" Lon: "+eleLongitude, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(imageUri==null){
-                    Toast.makeText(EleProfileUpdate.this, "pic an image", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(validateInputs()){
-                    uploadImageToFirebase(imageUri);
+                    if(imageUri==null){
+                        Toast.makeText(EleProfileUpdate.this, "pic an image", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(validateInputs()){
+                        uploadImageToFirebase(imageUri);
+                    }
                 }
             }
         });
 
+    }
+
+    private void checkLocationPermission() {
+        requestPermissions(new String[]{"android.permission.ACCESS_FINE_LOCATION"},111);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==111){
+            getLocationFromLocationName();
+        }
     }
 
     private boolean getLocationFromLocationName() {
@@ -91,9 +105,11 @@ public class EleProfileUpdate extends AppCompatActivity {
         Geocoder geocoder = new Geocoder(this);
         List<Address> addresses = null;
         try {
-            addresses = geocoder.getFromLocationName(city, 1);
+            System.out.println(city);
+            addresses = geocoder.getFromLocationName(addressTxt.getText().toString().trim(), 1);
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(this, "Location not found🙄🙄", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -101,7 +117,9 @@ public class EleProfileUpdate extends AppCompatActivity {
             eleLatitude = addresses.get(0).getLatitude();
             eleLongitude = addresses.get(0).getLongitude();
             Log.d("TAG", "Latitude: " + eleLatitude + ", Longitude: " + eleLongitude);
+
         } else {
+            Toast.makeText(this, "Location not found.....", Toast.LENGTH_SHORT).show();
             Log.d("TAG", "Unable to find location.");
             return false;
         }
