@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.Models.User;
 import com.example.eleplum.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
      public static String userId;
      CheckBox loginEleBox;
      boolean isLoginEle;
+     public static double eleLongitude;
+     public static double eleLatitude;
      @Override
      protected void onCreate(@Nullable Bundle savedInstanceState) {
           super.onCreate(savedInstanceState);
@@ -103,6 +106,11 @@ public class LoginActivity extends AppCompatActivity {
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
+                         for(DataSnapshot d:snapshot.getChildren()){
+                              Electrician ele=d.getValue(Electrician.class);
+                              eleLongitude=ele.getLongitude();
+                              eleLatitude=ele.getLatitude();
+                         }
                          Intent intent =new Intent(LoginActivity.this,EleMainActivity.class);
                          startActivity(intent);
                          finish();
