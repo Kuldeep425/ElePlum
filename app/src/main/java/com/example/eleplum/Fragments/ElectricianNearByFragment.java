@@ -11,12 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.eleplum.AdapterListener.ElectricianAdapterListener;
 import com.example.eleplum.Adapters.ElectricianAdapter;
+import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.R;
 
 
-public class ElectricianNearByFragment extends Fragment {
+public class ElectricianNearByFragment extends Fragment implements ElectricianAdapterListener {
 
     View rootView;
     RecyclerView electricianRecyclerView;
@@ -28,7 +31,7 @@ public class ElectricianNearByFragment extends Fragment {
         initialization();
 
         // listing electricians
-        ElectricianAdapter electricianAdapter=new ElectricianAdapter(electricianList,getContext());
+        ElectricianAdapter electricianAdapter=new ElectricianAdapter(electricianList,getContext(),ElectricianNearByFragment.this);
         electricianRecyclerView.setAdapter(electricianAdapter);
 
         return rootView;
@@ -38,6 +41,16 @@ public class ElectricianNearByFragment extends Fragment {
 
         electricianRecyclerView=rootView.findViewById(R.id.electricianRecyclerView);
         electricianRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+    }
+
+    @Override
+    public void onCallIconClick(Electrician electrician) {
+        Toast.makeText(getContext(), ""+electrician.getElectricianId(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onChatIconClick(Electrician electrician) {
 
     }
 }
