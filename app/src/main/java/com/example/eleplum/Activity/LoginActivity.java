@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                // calling login to user function to login the user once the fields are valid
                loginToElectrician();
           }
+
      }
 
      private void loginToElectrician() {
@@ -105,20 +106,28 @@ public class LoginActivity extends AppCompatActivity {
           checkElectrician.addListenerForSingleValueEvent(new ValueEventListener() {
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
-                         for(DataSnapshot d:snapshot.getChildren()){
-                              Electrician ele=d.getValue(Electrician.class);
-                              eleLongitude=ele.getLongitude();
-                              eleLatitude=ele.getLatitude();
+                         Electrician electrician=null;
+                         for(DataSnapshot d:snapshot.getChildren()) {
+                              electrician = d.getValue(Electrician.class);
                          }
-                         Intent intent =new Intent(LoginActivity.this,EleMainActivity.class);
+                         if(electrician==null){
+                              Toast.makeText(LoginActivity.this, "Electrician not found", Toast.LENGTH_SHORT).show();
+                              return;
+                         }
+                         Intent intent;
+
+                         if(electrician.isProfileCompleted()) {
+                              intent=new Intent(LoginActivity.this,EleMainActivity.class);
+                              eleLatitude= electrician.getLatitude();
+                              eleLongitude=electrician.getLongitude();
+                         }
+                         else {
+                              intent = new Intent(LoginActivity.this, EleProfileUpdate.class);
+                              intent.putExtra("electrician",electrician);
+                         }
                          startActivity(intent);
                          finish();
-                    }else{
-                         Toast.makeText(LoginActivity.this, "login failed", Toast.LENGTH_SHORT).show();
                     }
-               }
-
                @Override
                public void onCancelled(@NonNull DatabaseError error) {
 

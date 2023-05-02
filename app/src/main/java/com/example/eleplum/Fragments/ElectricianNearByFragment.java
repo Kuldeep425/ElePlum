@@ -31,12 +31,6 @@ public class ElectricianNearByFragment extends Fragment {
         ElectricianAdapter electricianAdapter=new ElectricianAdapter(electricianList,getContext());
         electricianRecyclerView.setAdapter(electricianAdapter);
 
-
-
-
-
-
-
         return rootView;
     }
 
