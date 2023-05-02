@@ -82,6 +82,11 @@ dependencies {
     implementation 'com.sinch:sdk-sms:1.0.5'
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.31'
 
+    // for firebase storage
+    implementation 'com.google.firebase:firebase-storage'
+
+
+
 
 
 }
