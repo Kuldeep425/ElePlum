@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.R;
+import com.example.eleplum.Utils.Constants;
+import com.example.eleplum.Utils.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,11 +51,14 @@ public class EleProfileUpdate extends AppCompatActivity {
     String name,city,pinCode,bio;
     CircleImageView elePic;
     Button saveBtn;
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ele_profile_update);
+
+
 
         initialization();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -62,6 +67,7 @@ public class EleProfileUpdate extends AppCompatActivity {
         if(electrician==null){
             Toast.makeText(this, "electrician not found", Toast.LENGTH_SHORT).show();
         }
+        preferenceManager=new PreferenceManager(this);
         System.out.println(electrician.getElectricianId());
         elePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,6 +222,9 @@ public class EleProfileUpdate extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
              if(task.isSuccessful()){
                  Toast.makeText(EleProfileUpdate.this,"Profile updated successfully",Toast.LENGTH_SHORT).show();
+                 preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN,true);
+                 preferenceManager.putBoolean(Constants.KEY_IS_USER,false);
+                 preferenceManager.putString(Constants.KEY_ELE_ID,electrician.getElectricianId());
                  Intent intent=new Intent(EleProfileUpdate.this,EleMainActivity.class);
                  startActivity(intent);
                  finish();

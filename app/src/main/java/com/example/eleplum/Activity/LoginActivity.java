@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.Models.User;
 import com.example.eleplum.R;
+import com.example.eleplum.Utils.Constants;
+import com.example.eleplum.Utils.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -49,12 +51,28 @@ public class LoginActivity extends AppCompatActivity {
      boolean isLoginEle;
      public static double eleLongitude;
      public static double eleLatitude;
+     private PreferenceManager preferenceManager;
      @Override
      protected void onCreate(@Nullable Bundle savedInstanceState) {
           super.onCreate(savedInstanceState);
           setContentView(R.layout.activity_login);
+
           //Initialize all data fields
           initialization();
+          preferenceManager=new PreferenceManager(this);
+
+          if(preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)){
+               Intent intent;
+               if(preferenceManager.getBoolean(Constants.KEY_IS_USER)){
+                    intent=new Intent(LoginActivity.this,MainActivityUser.class);
+               }
+               else{
+                    intent=new Intent(LoginActivity.this,EleMainActivity.class);
+               }
+               startActivity(intent);
+               finish();
+          }
+
           //listener on checkbox to login as electrician
           loginEleBox.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -120,6 +138,9 @@ public class LoginActivity extends AppCompatActivity {
                               intent=new Intent(LoginActivity.this,EleMainActivity.class);
                               eleLatitude= electrician.getLatitude();
                               eleLongitude=electrician.getLongitude();
+                              preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN,true);
+                              preferenceManager.putBoolean(Constants.KEY_IS_USER,false);
+                              preferenceManager.putString(Constants.KEY_ELE_ID,electrician.getElectricianId());
                          }
                          else {
                               intent = new Intent(LoginActivity.this, EleProfileUpdate.class);
@@ -157,6 +178,9 @@ public class LoginActivity extends AppCompatActivity {
                               userId=user.getUserId();
                               System.out.println(userId);
                          }
+                         preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN,true);
+                         preferenceManager.putBoolean(Constants.KEY_IS_USER,true);
+                         preferenceManager.putString(Constants.KEY_USER_ID,userId);
                          Intent intent= new Intent(LoginActivity.this,MainActivityUser.class);
                          startActivity(intent);
                          finish();

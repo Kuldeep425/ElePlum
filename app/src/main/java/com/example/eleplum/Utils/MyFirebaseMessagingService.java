@@ -16,10 +16,15 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    @Override
+    public void onNewToken(@NonNull String token) {
+        super.onNewToken(token);
+        Log.d("FCM",token);
+    }
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
-        System.out.println(message.getData());
+        Log.d("message",message.getData()+"");
         if(message.getData().size()>0){
             createNotification(message);
         }
