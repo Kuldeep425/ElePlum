@@ -64,10 +64,10 @@ public class ElectricianNearByFragment extends Fragment implements ElectricianAd
             Toast.makeText(getContext(), "electrician not found..could not make a call", Toast.LENGTH_LONG).show();
             return;
         }
-//        if(electrician.getFcmToken()!=null){
-//            Toast.makeText(getContext(), "Fcm token not found", Toast.LENGTH_SHORT).show();
-//             return;
-//        }
+        if(electrician.getFcmToken()==null || electrician.getFcmToken().length()==0){
+            Toast.makeText(getContext(), "Fcm token not found", Toast.LENGTH_SHORT).show();
+             return;
+        }
         Toast.makeText(getContext(), ""+electrician.getElectricianId(), Toast.LENGTH_SHORT).show();
         // function to check request permission
         checkPermissionAndMakeCall();
@@ -110,6 +110,7 @@ public class ElectricianNearByFragment extends Fragment implements ElectricianAd
         intent.putExtra("calleeName",electrician.getName());
         intent.putExtra("calleeImageURL",electrician.getImageURL());
         intent.putExtra("calleeFcmToken",electrician.getFcmToken());
+        Toast.makeText(getContext(),"Callee FcM: "+electrician.getFcmToken(), Toast.LENGTH_SHORT).show();
 
         startActivity(intent);
     }

@@ -124,7 +124,7 @@ public class HomeUserFragment extends Fragment {
         return rootview;
     }
 
-    // method to save fcm in db
+    // method to save user's fcm token  in db
     private void saveFcmToDatabase(String token) {
         DatabaseReference db= FirebaseDatabase.getInstance().getReference("ElePlum");
         String loggedInUserId=preferenceManager.getString(Constants.KEY_USER_ID);
@@ -139,6 +139,8 @@ public class HomeUserFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
+                   // Toast.makeText(getContext(), "user fcm saved", Toast.LENGTH_SHORT).show();
+                     preferenceManager.putString(Constants.KEY_FCM_TOKEN,token);
                       Log.d("FCM Success : ","Successfully saved");
                 }
                 else{

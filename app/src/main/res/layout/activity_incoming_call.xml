@@ -8,6 +8,21 @@
     tools:context=".Activity.IncomingCallActivity">
 
 
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/yrsabolditalic"
+        android:text="is calling you"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.659" />
 
     <TextView
         android:id="@+id/callerNameTextView"
@@ -54,11 +69,11 @@
         app:layout_constraintVertical_bias="0.402" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/call_accept_imageviewIncoming2"
+        android:id="@+id/call_accept_imageviewIncoming"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@drawable/bg_green_oval"
-        android:padding="6dp"
+        android:padding="10dp"
         android:src="@drawable/ic_right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,11 +83,11 @@
         app:layout_constraintVertical_bias="0.864" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/call_cancel_imageviewIncoming"
+        android:id="@+id/call_reject_imageviewIncoming"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@drawable/bg_red_oval"
-        android:padding="6dp"
+        android:padding="10dp"
         android:src="@drawable/ic_cross"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

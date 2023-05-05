@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.eleplum"
-        minSdk 23
+        minSdk 24
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -92,6 +92,10 @@ dependencies {
     // retrofit
     implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.9.0'
     implementation group: 'com.squareup.retrofit2', name: 'converter-scalars', version: '2.9.0'
+
+    // jitsi meet sdk
+
+    implementation ('org.jitsi.react:jitsi-meet-sdk:+') { transitive = true }
 
 
 
