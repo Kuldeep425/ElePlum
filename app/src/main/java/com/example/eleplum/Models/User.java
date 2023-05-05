@@ -8,6 +8,7 @@ public class User implements Serializable {
     private String phoneNumber;
     private String password;
     private String phonePass;
+    private String fcmToken;
 
 
     public User(String name, String phoneNumber, String password,String phonePass) {
@@ -15,6 +16,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.phonePass=phonePass;
+        this.fcmToken=null;
     }
 
     public User() {
@@ -58,5 +60,13 @@ public class User implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }

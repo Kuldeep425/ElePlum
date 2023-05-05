@@ -14,6 +14,9 @@
     <color name="darkgrean">#00A800</color>
     <color name="green_700">#5FBA1E</color>
     <color name="red_700">#D50000</color>
+    
+    <color name="colorCallInvitationStart">#4004BB</color>
+    <color name="colorCallInvitationEnd">#8A1AAA</color>
 
 
 

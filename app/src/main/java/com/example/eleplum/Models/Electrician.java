@@ -14,12 +14,14 @@ public class Electrician implements Serializable {
     private String imageURL;
     private String phone;
     private String phonePass;
+    private String fcmToken;
     private boolean profileCompleted;
 
     public Electrician(String name, String phone) {
         this.name = name;
         this.phone = phone;
         this.profileCompleted=false;
+        this.fcmToken="";
     }
 
     public Electrician(String electricianId, String name, String password, Double latitude, Double longitude, String imageURL, String phone, String phonePass, boolean profileCompleted) {
@@ -112,5 +114,13 @@ public class Electrician implements Serializable {
 
     public void setProfileCompleted(boolean profileCompleted) {
         this.profileCompleted = profileCompleted;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }
