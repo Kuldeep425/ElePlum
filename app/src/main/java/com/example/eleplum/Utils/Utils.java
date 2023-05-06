@@ -9,6 +9,7 @@ import com.sinch.xms.api.MtBatchTextSmsCreate;
 import com.sinch.xms.api.MtBatchTextSmsResult;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 
 public class Utils {
 
@@ -61,6 +62,17 @@ public class Utils {
             Toast.makeText(context, "fail to send sms", Toast.LENGTH_SHORT).show();
         }
         Toast.makeText(context, "sms sent successfully", Toast.LENGTH_SHORT).show();
+    }
+
+
+    // method to get the fcm header
+
+    public HashMap<String,String> getRemoteMessageHeaders() {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put(Constants.REMOTE_MSG_AUTHORIZATION,
+                "key=AAAAUaIu2gs:APA91bG8tybPkKjUFlFKHJp2bUqvHjBt64WilBYGKHH9yetpWm_PqW57B5i-nppOSZMRaVxC4y9a7xGvIyYGAQOripKhf13BhLCa2P1seIxsnY2UQOU4uuoGBkOfrDkO_Wr2b2kieR2w");
+        headers.put(Constants.REMOTE_MSG_CONTENT_TYPE, "application/json");
+        return headers;
     }
 
 }

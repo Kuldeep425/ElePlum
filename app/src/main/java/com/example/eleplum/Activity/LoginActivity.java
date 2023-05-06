@@ -141,6 +141,8 @@ public class LoginActivity extends AppCompatActivity {
                               preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN,true);
                               preferenceManager.putBoolean(Constants.KEY_IS_USER,false);
                               preferenceManager.putString(Constants.KEY_ELE_ID,electrician.getElectricianId());
+                              preferenceManager.putString(Constants.KEY_NAME,electrician.getName());
+                              preferenceManager.putString(Constants.KEY_PROFILE_IMAGE_URL,electrician.getImageURL());
                          }
                          else {
                               intent = new Intent(LoginActivity.this, EleProfileUpdate.class);
@@ -173,14 +175,21 @@ public class LoginActivity extends AppCompatActivity {
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
+                         User user=null;
                          for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                              User user=dataSnapshot.getValue(User.class);
+                              user=dataSnapshot.getValue(User.class);
                               userId=user.getUserId();
                               System.out.println(userId);
+                         }
+                         if(user==null){
+                              Toast.makeText(LoginActivity.this, "user not found", Toast.LENGTH_SHORT).show();
+                              return;
                          }
                          preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN,true);
                          preferenceManager.putBoolean(Constants.KEY_IS_USER,true);
                          preferenceManager.putString(Constants.KEY_USER_ID,userId);
+                         preferenceManager.putString(Constants.KEY_NAME,user.getName());
+                        // preferenceManager.putString(Constants.KEY_PROFILE_IMAGE_URL,user.get);
                          Intent intent= new Intent(LoginActivity.this,MainActivityUser.class);
                          startActivity(intent);
                          finish();

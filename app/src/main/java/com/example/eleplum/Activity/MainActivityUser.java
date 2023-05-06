@@ -19,6 +19,10 @@ import androidx.core.app.ActivityCompat;
 import com.example.eleplum.Fragments.ChatFragment;
 import com.example.eleplum.Fragments.HomeUserFragment;
 import com.example.eleplum.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivityUser extends AppCompatActivity {
     LinearLayout homeLayout,chatLayout,notificationLayout,callLayout;
@@ -45,6 +49,7 @@ public class MainActivityUser extends AppCompatActivity {
                   .setReorderingAllowed(true)
                   .replace(R.id.fragmentContainer, HomeUserFragment.class,null)
                   .commit();
+
 
 
          // when user selects the home layout

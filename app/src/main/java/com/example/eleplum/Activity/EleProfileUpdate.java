@@ -225,6 +225,8 @@ public class EleProfileUpdate extends AppCompatActivity {
                  preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN,true);
                  preferenceManager.putBoolean(Constants.KEY_IS_USER,false);
                  preferenceManager.putString(Constants.KEY_ELE_ID,electrician.getElectricianId());
+                 preferenceManager.putString(Constants.KEY_NAME,electrician.getName());
+                 preferenceManager.putString(Constants.KEY_PROFILE_IMAGE_URL,electrician.getImageURL());
                  Intent intent=new Intent(EleProfileUpdate.this,EleMainActivity.class);
                  startActivity(intent);
                  finish();
