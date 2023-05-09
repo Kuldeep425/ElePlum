@@ -143,6 +143,8 @@ public class LoginActivity extends AppCompatActivity {
                               preferenceManager.putString(Constants.KEY_ELE_ID,electrician.getElectricianId());
                               preferenceManager.putString(Constants.KEY_NAME,electrician.getName());
                               preferenceManager.putString(Constants.KEY_PROFILE_IMAGE_URL,electrician.getImageURL());
+                              System.out.println(electrician.isInterested());
+                              preferenceManager.putBoolean(Constants.KEY_IS_INTERESTED,electrician.isInterested());
                          }
                          else {
                               intent = new Intent(LoginActivity.this, EleProfileUpdate.class);

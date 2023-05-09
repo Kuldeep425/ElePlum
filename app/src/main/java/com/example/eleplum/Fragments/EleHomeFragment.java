@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.example.eleplum.Utils.Constants;
 import com.example.eleplum.Utils.PreferenceManager;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,6 +33,9 @@ public class EleHomeFragment extends Fragment {
    View view;
    CircleImageView electricianPic;
    TextView electricianName;
+   Button interestedBtn;
+   boolean interest;
+   DatabaseReference reference;
 
     public EleHomeFragment() {
         // Required empty public constructor
@@ -51,6 +56,9 @@ public class EleHomeFragment extends Fragment {
         // initialization
         initialization();
 
+
+
+
         // method to set the electrician profile on the screen
         setElectricianData();
 
@@ -68,21 +76,58 @@ public class EleHomeFragment extends Fragment {
             }
         });
 
+        // on touching the interested btn
+        interestedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              // update the value
+                updateInterestedStatus();
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    // method to update interest status
+    private void updateInterestedStatus(){
+        FirebaseDatabase.getInstance().getReference("ElePlum")
+                .child("Electrician")
+                .child(preferenceManager.getString(Constants.KEY_ELE_ID))
+                .child("isInterested")
+                .setValue(!interest)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                      interest=!interest;
+                      // set the interest status
+                        if(interest) interestedBtn.setText("Yes");
+                        else interestedBtn.setText("No");
+                    }
+                });
     }
 
     // method to set the electrician data on the screen
     private void setElectricianData() {
         Picasso.get().load(preferenceManager.getString(Constants.KEY_PROFILE_IMAGE_URL)).into(electricianPic);
         electricianName.setText(preferenceManager.getString(Constants.KEY_NAME));
+        if(interest) interestedBtn.setText("Yes");
+        else interestedBtn.setText("No");
+
+
     }
 
     // method to initialize the element
     private void initialization() {
         electricianPic=view.findViewById(R.id.ele_pic_image);
         electricianName=view.findViewById(R.id.ele_name_textview);
+        interestedBtn=view.findViewById(R.id.interestedBtn);
+
+        // interest boolean
+        interest=preferenceManager.getBoolean(Constants.KEY_IS_INTERESTED);
+
+
+
     }
 
     // method to save electrician 's fcm token  in db
