@@ -1,5 +1,7 @@
 package com.example.eleplum.Activity;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.Models.User;
@@ -143,6 +146,8 @@ public class LoginActivity extends AppCompatActivity {
                               preferenceManager.putString(Constants.KEY_ELE_ID,electrician.getElectricianId());
                               preferenceManager.putString(Constants.KEY_NAME,electrician.getName());
                               preferenceManager.putString(Constants.KEY_PROFILE_IMAGE_URL,electrician.getImageURL());
+                              System.out.println(electrician.isInterested());
+                              preferenceManager.putBoolean(Constants.KEY_IS_INTERESTED,electrician.isInterested());
                          }
                          else {
                               intent = new Intent(LoginActivity.this, EleProfileUpdate.class);
@@ -214,6 +219,7 @@ public class LoginActivity extends AppCompatActivity {
           mAuth = FirebaseAuth.getInstance();
           reference = FirebaseDatabase.getInstance().getReference("ElePum");
           loginEleBox=findViewById(R.id.checkBox);
+
      }
 
 

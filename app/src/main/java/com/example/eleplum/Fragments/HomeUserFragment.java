@@ -53,6 +53,7 @@ public class HomeUserFragment extends Fragment {
     FusedLocationProviderClient fusedLocationProviderClient;
     Location userCurrentLoc;
     boolean locationRes=false;
+    String token;
     private PreferenceManager preferenceManager;
 
 
@@ -70,8 +71,9 @@ public class HomeUserFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<String> task) {
                 if(task.isSuccessful()){
+                    token=task.getResult();
                    // once the fcm token is retrieved save it to the db for notification purpose
-                   saveFcmToDatabase(task.getResult());
+                   saveFcmToDatabase(token);
                 }
                 else{
                    // Toast.makeText(getContext(), "failed to create fcm token", Toast.LENGTH_SHORT).show();

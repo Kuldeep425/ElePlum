@@ -1,6 +1,9 @@
 package com.example.eleplum.Utils;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -27,7 +30,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
-        Log.d("message",message.getData()+"");
+        Log.d("message: ",message.getData()+"");
         String type=message.getData().get(Constants.REMOTE_MSG_TYPE);
         if(type!=null) {
             if(type.equals(Constants.REMOTE_MSG_CALL_INVITATION)) {
@@ -49,7 +52,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .getInstance(getApplicationContext())
                         .sendBroadcast(intent);
             }
-            if (type.equals("notification")) {
+            else if (type.equals(Constants.REMOTE_MSG_NOTIFICATION)) {
                 createNotification(message);
             }
         }
@@ -58,25 +61,39 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
     private void createNotification(RemoteMessage message){
+        System.out.println("Got a Notification");
         // Create and show a notification to the user
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel_id")
-                .setSmallIcon(R.drawable.icon_notification)
-                .setContentTitle(message.getNotification().getTitle())
-                .setContentText(message.getNotification().getBody())
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationManager notificationManager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Notification notification;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notification = new Notification.Builder(this)
+                    .setSmallIcon(R.drawable.icon_notification)
+                    .setContentTitle(message.getData().get(Constants.REMOTE_MSG_TITLE))
+                    .setContentText(message.getData().get(Constants.REMOTE_MSG_MESSAGE))
+                    .setChannelId(Constants.NOTIFICATION_CHANNEL)
+                    .build();
+            notificationManager.createNotificationChannel(new NotificationChannel(
+                    Constants.NOTIFICATION_CHANNEL,"Work Notification",NotificationManager.IMPORTANCE_HIGH
+            ));
+        }
+        else{
+            notification = new Notification.Builder(this)
+                    .setSmallIcon(R.drawable.icon_notification)
+                    .setContentTitle(message.getData().get(Constants.REMOTE_MSG_TITLE))
+                    .setContentText(message.getData().get(Constants.REMOTE_MSG_MESSAGE))
+                    .build();
+        }
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU){
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)== PackageManager.PERMISSION_GRANTED){
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-                notificationManager.notify(0, builder.build());
+                notificationManager.notify(Constants.NOTIFICATION_ID,notification);
             }
             else{
                 Toast.makeText(this, "Notification permission not granted", Toast.LENGTH_SHORT).show();
             }
         }
         else {
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(0, builder.build());
+            notificationManager.notify(Constants.NOTIFICATION_ID,notification);
         }
     }
 }
