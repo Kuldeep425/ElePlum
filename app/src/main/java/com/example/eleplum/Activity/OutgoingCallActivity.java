@@ -208,7 +208,7 @@ public class OutgoingCallActivity extends AppCompatActivity {
                             .setAudioOnly(true)
                             .setRoom(callRoom)
                             .build();
-                    //JitsiMeetActivity.launch(OutgoingCallActivity.this,conferenceOptions);
+                    JitsiMeetActivity.launch(OutgoingCallActivity.this,conferenceOptions);
                     finish();
                 }
                 catch (Exception e){

@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
           //Initialize all data fields
           initialization();
-          preferenceManager=new PreferenceManager(this);
+          preferenceManager=new PreferenceManager(LoginActivity.this);
 
           if(preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)){
                Intent intent;

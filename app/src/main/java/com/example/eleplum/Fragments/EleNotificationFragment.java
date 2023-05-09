@@ -14,13 +14,7 @@ import android.widget.Toast;
 
 import com.example.eleplum.Adapters.EleNoteAdapter;
 import com.example.eleplum.Models.CreatedTask;
-import com.example.eleplum.Models.Electrician;
-import com.example.eleplum.Models.noteModel;
 import com.example.eleplum.R;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;

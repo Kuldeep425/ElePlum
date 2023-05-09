@@ -21,8 +21,6 @@ import com.example.eleplum.AdapterListener.PendingElectricianListener;
 import com.example.eleplum.Adapters.PendingElectricianAdapter;
 import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.R;
-import com.example.eleplum.Utils.SMSSenderUtil;
-import com.example.eleplum.Utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;

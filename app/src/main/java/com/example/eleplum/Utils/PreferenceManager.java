@@ -3,11 +3,12 @@ package com.example.eleplum.Utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.google.googlejavaformat.Indent;
+import com.example.eleplum.Activity.ChatActivity;
 
 public class PreferenceManager {
 
     private SharedPreferences sharedPreferences;
+
 
     public PreferenceManager(Context context){
         sharedPreferences=context.getSharedPreferences(Constants.KEY_PREFERENCE_NAME,Context.MODE_PRIVATE);

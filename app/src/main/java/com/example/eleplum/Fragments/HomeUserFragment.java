@@ -74,7 +74,7 @@ public class HomeUserFragment extends Fragment {
                    saveFcmToDatabase(task.getResult());
                 }
                 else{
-                    Toast.makeText(getContext(), "failed to create fcm token", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), "failed to create fcm token", Toast.LENGTH_SHORT).show();
                 }
             }
         });

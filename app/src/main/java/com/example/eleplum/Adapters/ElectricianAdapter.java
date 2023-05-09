@@ -60,6 +60,12 @@ public class ElectricianAdapter extends RecyclerView.Adapter<ElectricianAdapter.
                 listener.onCallIconClick(electricians.get(position));
             }
         });
+        holder.chatImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onChatIconClick(electricians.get(position));
+            }
+        });
 
 
 

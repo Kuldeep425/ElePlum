@@ -1,6 +1,5 @@
 package com.example.eleplum.Fragments;
 
-import static com.example.eleplum.Activity.LoginActivity.userId;
 import static com.example.eleplum.Fragments.ElectricianNearByGoogleMapFragment.electricianList;
 
 import android.content.Intent;
@@ -18,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.eleplum.Activity.ChatActivity;
 import com.example.eleplum.Activity.OutgoingCallActivity;
 import com.example.eleplum.AdapterListener.ElectricianAdapterListener;
 import com.example.eleplum.Adapters.ElectricianAdapter;
@@ -117,6 +117,11 @@ public class ElectricianNearByFragment extends Fragment implements ElectricianAd
 
     @Override
     public void onChatIconClick(Electrician electrician) {
+
+          Intent intent=new Intent(getContext(), ChatActivity.class);
+          intent.putExtra(Constants.CHAT_RECEIVER_ID,electrician.getElectricianId());
+          intent.putExtra(Constants.CHAT_RECEIVER_NAME,electrician.getName());
+          startActivity(intent);
 
     }
 }

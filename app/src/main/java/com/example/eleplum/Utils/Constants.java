@@ -39,6 +39,12 @@ public class Constants {
     public static final String REMOTE_MSG_CALL_ROOM="callRoom";
 
 
+    // for chat
+    public static final String CHAT_RECEIVER_ID="receiverId";
+    public static final String CHAT_RECEIVER_NAME="receiverName";
+
+
+
 
 
 
