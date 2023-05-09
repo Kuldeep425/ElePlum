@@ -16,6 +16,7 @@ public class Electrician implements Serializable {
     private String phonePass;
     private String fcmToken;
     private boolean profileCompleted;
+    private boolean isInterested=false;
 
     public Electrician(String name, String phone) {
         this.name = name;
@@ -122,5 +123,13 @@ public class Electrician implements Serializable {
 
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+
+    public boolean isInterested() {
+        return isInterested;
+    }
+
+    public void setInterested(boolean interested) {
+        this.isInterested = interested;
     }
 }
