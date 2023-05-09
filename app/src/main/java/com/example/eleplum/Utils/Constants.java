@@ -39,6 +39,13 @@ public class Constants {
     public static final String REMOTE_MSG_CALL_CANCELLED = "cancelled";
 
     public static final String REMOTE_MSG_CALL_ROOM="callRoom";
+    public static final String REMOTE_MSG_NOTIFICATION="notification";
+    public static final String REMOTE_MSG_DISTANCE="distance";
+    public static final String REMOTE_MSG_MESSAGE="message";
+    public static final String REMOTE_MSG_TITLE="title";
+    public static final String NOTIFICATION_CHANNEL="notificationChannel";
+    public static final int NOTIFICATION_ID=100;
+
 
 
     // for chat

@@ -1,5 +1,7 @@
 package com.example.eleplum.Activity;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.Models.User;
@@ -216,6 +219,7 @@ public class LoginActivity extends AppCompatActivity {
           mAuth = FirebaseAuth.getInstance();
           reference = FirebaseDatabase.getInstance().getReference("ElePum");
           loginEleBox=findViewById(R.id.checkBox);
+
      }
 
 
