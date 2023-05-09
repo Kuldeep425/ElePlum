@@ -2,6 +2,9 @@ package com.example.eleplum.Fragments;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.content.Context.CONSUMER_IR_SERVICE;
+
+import static com.example.eleplum.Activity.LoginActivity.userId;
 
 import android.Manifest;
 import android.content.Intent;
@@ -25,11 +28,18 @@ import android.widget.Toast;
 
 import com.example.eleplum.Activity.CreateTaskActivity;
 import com.example.eleplum.Activity.ElectricianNearByActivity;
+import com.example.eleplum.Activity.MainActivityUser;
 import com.example.eleplum.R;
+import com.example.eleplum.Utils.Constants;
+import com.example.eleplum.Utils.PreferenceManager;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.List;
 import java.util.jar.Pack200;
@@ -43,6 +53,7 @@ public class HomeUserFragment extends Fragment {
     FusedLocationProviderClient fusedLocationProviderClient;
     Location userCurrentLoc;
     boolean locationRes=false;
+    private PreferenceManager preferenceManager;
 
 
     @Override
@@ -50,6 +61,23 @@ public class HomeUserFragment extends Fragment {
         rootview = inflater.inflate(R.layout.fragment_home_user, container, false);
         // initialize the widget
         initialize();
+
+        // preference manager
+        preferenceManager=new PreferenceManager(getContext());
+
+        // for getting fcm token
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if(task.isSuccessful()){
+                   // once the fcm token is retrieved save it to the db for notification purpose
+                   saveFcmToDatabase(task.getResult());
+                }
+                else{
+                   // Toast.makeText(getContext(), "failed to create fcm token", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         // initialize the fusedLocationProvider
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -94,6 +122,32 @@ public class HomeUserFragment extends Fragment {
 
 
         return rootview;
+    }
+
+    // method to save user's fcm token  in db
+    private void saveFcmToDatabase(String token) {
+        DatabaseReference db= FirebaseDatabase.getInstance().getReference("ElePlum");
+        String loggedInUserId=preferenceManager.getString(Constants.KEY_USER_ID);
+        if(loggedInUserId==null){
+            Log.d("UserId ","User not found");
+            Log.d("FCM Fail:", "Could not save the fcm");
+            return;
+        }
+        System.out.println(token);
+        DatabaseReference reference=db.child("users").child(loggedInUserId).child("fcmToken");
+        reference.setValue(token).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                   // Toast.makeText(getContext(), "user fcm saved", Toast.LENGTH_SHORT).show();
+                     preferenceManager.putString(Constants.KEY_FCM_TOKEN,token);
+                      Log.d("FCM Success : ","Successfully saved");
+                }
+                else{
+                    Log.d("FCM Fail:", "Could not save the fcm");
+                }
+            }
+        });
     }
 
 

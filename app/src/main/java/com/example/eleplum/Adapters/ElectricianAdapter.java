@@ -7,11 +7,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.eleplum.AdapterListener.ElectricianAdapterListener;
 import com.example.eleplum.Models.Electrician;
 import com.example.eleplum.R;
 import com.example.eleplum.Utils.Utils;
@@ -25,9 +27,11 @@ public class ElectricianAdapter extends RecyclerView.Adapter<ElectricianAdapter.
 
     ArrayList<Electrician>electricians;
     Context context;
-    public ElectricianAdapter(ArrayList<Electrician>electricians,Context context) {
+    private ElectricianAdapterListener listener;
+    public ElectricianAdapter(ArrayList<Electrician>electricians,Context context,ElectricianAdapterListener listener) {
         this.electricians=electricians;
         this.context=context;
+        this.listener=listener;
     }
 
     @NonNull
@@ -49,6 +53,20 @@ public class ElectricianAdapter extends RecyclerView.Adapter<ElectricianAdapter.
         Double dis=new Utils().getDistance(electrician.getLatitude(),electrician.getLongitude(),userLocLatitude,userLocLongitude);
         holder.distance.setText(String.format("%.1f",dis) +" Km");
 
+        // on clicking call icon
+        holder.callImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onCallIconClick(electricians.get(position));
+            }
+        });
+        holder.chatImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onChatIconClick(electricians.get(position));
+            }
+        });
+
 
 
 
@@ -65,6 +83,8 @@ public class ElectricianAdapter extends RecyclerView.Adapter<ElectricianAdapter.
         public TextView name;
         public TextView rating;
         public TextView distance;
+        public ImageView callImageView;
+        public ImageView chatImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +92,8 @@ public class ElectricianAdapter extends RecyclerView.Adapter<ElectricianAdapter.
             name=itemView.findViewById(R.id.electricianName);
             rating=itemView.findViewById(R.id.electricianRating);
             distance=itemView.findViewById(R.id.distance);
+            callImageView=itemView.findViewById(R.id.ele_callIcon);
+            chatImageView=itemView.findViewById(R.id.ele_chatIcon);
         }
     }
 }

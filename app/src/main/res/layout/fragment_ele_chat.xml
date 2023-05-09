@@ -12,10 +12,25 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:orientation="horizontal"
+                android:background="@color/lightgrean">
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="HeLLo Chat" />
+                android:layout_below="@id/linearLayout">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/chatFriendRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+
         </RelativeLayout>
 
     </ScrollView>

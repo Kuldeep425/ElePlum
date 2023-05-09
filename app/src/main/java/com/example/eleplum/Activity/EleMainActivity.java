@@ -26,6 +26,9 @@ public class EleMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ele_main);
+
+        getSupportActionBar().hide();
+
         initialization();
 
         bnView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

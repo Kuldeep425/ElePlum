@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eleplum.Activity.LoginActivity;
-import com.example.eleplum.Fragments.EleNotificationFragment;
 import com.example.eleplum.Models.CreatedTask;
 import com.example.eleplum.R;
 
