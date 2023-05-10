@@ -12,13 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eleplum.Activity.LoginActivity;
 import com.example.eleplum.Models.CreatedTask;
 import com.example.eleplum.R;
+import com.example.eleplum.Utils.Constants;
+import com.example.eleplum.Utils.PreferenceManager;
 
+import java.lang.ref.PhantomReference;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class EleNoteAdapter extends RecyclerView.Adapter<EleNoteAdapter.ViewHolder> {
     Context context;
  ArrayList<CreatedTask> arrNote;
+ private PreferenceManager preferenceManager;
  public EleNoteAdapter(Context context, ArrayList<CreatedTask> arrNote){
      this.context=context;
      this.arrNote=arrNote;
@@ -28,6 +32,7 @@ public class EleNoteAdapter extends RecyclerView.Adapter<EleNoteAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
       View view=  LayoutInflater.from(context).inflate(R.layout.ele_note_row,parent,false);
       ViewHolder viewHolder= new ViewHolder(view);
+      preferenceManager=new PreferenceManager(context);
         return viewHolder;
     }
 
@@ -36,12 +41,17 @@ public class EleNoteAdapter extends RecyclerView.Adapter<EleNoteAdapter.ViewHold
       CreatedTask createdTask=arrNote.get(position);
      double taskLongitude=createdTask.getLongitude();
      double taskLatitude=createdTask.getLatitude();
-     double distance=getDistance(taskLatitude,taskLongitude, LoginActivity.eleLatitude,LoginActivity.eleLongitude);
+        double distance=
+                getDistance(taskLatitude,taskLongitude,
+                        Double.valueOf(preferenceManager.getString(Constants.KEY_ELE_LATITUDE)),
+                        Double.valueOf(preferenceManager.getString(Constants.KEY_ELE_LONGITUDE))
+                );
 
-         holder.txtId.setText(createdTask.getTaskId());
-         holder.txtDate.setText(createdTask.getDate());
-         holder.txtDistance.setText(distance+"");
-         holder.txtTime.setText(createdTask.getTime());
+             holder.txtId.setText("Desc: " + createdTask.getDesc());
+             holder.txtDate.setText("Date: " + createdTask.getDate());
+             holder.txtDistance.setText("Distance : " + String.format("%.2f",distance) + "km");
+             holder.txtTime.setText("Time: " + createdTask.getTime());
+
     }
 
     @Override

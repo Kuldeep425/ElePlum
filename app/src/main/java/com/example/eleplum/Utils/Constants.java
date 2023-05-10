@@ -13,6 +13,9 @@ public class Constants {
     public static final String KEY_PROFILE_IMAGE_URL = "imageURL";
     public static final String KEY_FCM_TOKEN = "fcmToken";
     public static final String KEY_IS_INTERESTED = "isInterested";
+    public static final String KEY_ELE_LATITUDE = "latitude";
+    public static final String KEY_ELE_LONGITUDE = "longitude";
+
 
 
 

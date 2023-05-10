@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.example.eleplum.Adapters.EleNoteAdapter;
 import com.example.eleplum.Models.CreatedTask;
 import com.example.eleplum.R;
+import com.example.eleplum.Utils.Constants;
+import com.example.eleplum.Utils.PreferenceManager;
+import com.example.eleplum.Utils.Utils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,6 +31,7 @@ public class EleNotificationFragment extends Fragment {
     RecyclerView recyclerView;
     View view;
     public ArrayList<CreatedTask> arrNote= new ArrayList<>();
+    private PreferenceManager preferenceManager;
 
     public EleNotificationFragment() {
         // Required empty public constructor
@@ -39,8 +43,9 @@ public class EleNotificationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_ele_notification, container, false);
-
+        preferenceManager=new PreferenceManager(getContext());
         initialization();
+
         return view;
 
     }
@@ -59,11 +64,17 @@ public class EleNotificationFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println(snapshot);
-                int i=0;
                 if(snapshot.exists()) {
                     for (DataSnapshot d : snapshot.getChildren()) {
-                        arrNote.add(d.getValue(CreatedTask.class));
-                        i++;
+                        CreatedTask task=d.getValue(CreatedTask.class);
+                        double distance=
+                                new Utils().getDistance(task.getLatitude(),task.getLongitude(),
+                                        Double.valueOf(preferenceManager.getString(Constants.KEY_ELE_LATITUDE)),
+                                        Double.valueOf(preferenceManager.getString(Constants.KEY_ELE_LONGITUDE))
+                                );
+                        if(distance<=11){
+                            arrNote.add(task);
+                        }
                     }
                     System.out.println(arrNote);
                     EleNoteAdapter adapter = new EleNoteAdapter(getContext(), arrNote);
