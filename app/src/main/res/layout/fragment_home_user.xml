@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:background="#EEEFEE">
         <RelativeLayout
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
@@ -87,7 +88,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:layout_marginTop="9dp">
+                    android:layout_marginTop="10dp">
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -117,26 +118,27 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="12dp">
                     <androidx.cardview.widget.CardView
                         android:id="@+id/create_task_view"
                         android:layout_width="0dp"
-                        android:layout_height="90dp"
+                        android:layout_height="80dp"
                         android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         app:cardCornerRadius="12dp"
-                        app:cardBackgroundColor="#324E7B">
+                        app:cardBackgroundColor="#FF6D00">
                         <ImageView
                             android:id="@+id/createTaskImage"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:src="@drawable/icon_createtask"
                             android:layout_gravity="center"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Create Task"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:fontFamily="@font/yrsaitalic"
@@ -145,7 +147,7 @@
                     </androidx.cardview.widget.CardView>
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
-                        android:layout_height="90dp"
+                        android:layout_height="80dp"
                         app:cardCornerRadius="12dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="#8D72E1"
@@ -153,15 +155,40 @@
                         >
                         <ImageView
                             android:id="@+id/payBillImage"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:src="@drawable/icon_rupee"
                             android:layout_gravity="center"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Pay Bills"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/yrsaitalic"
+                            android:layout_gravity="bottom"
+                            />
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/user_task_cardview"
+                        android:layout_width="0dp"
+                        android:layout_height="80dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="12dp"
+                        android:layout_marginRight="10dp"
+                        app:cardBackgroundColor="#324E7B">
+                        <ImageView
+                            android:id="@+id/taskImageview"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/ic_work"
+                            android:layout_gravity="center"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="My Tasks"
+                            android:textSize="14sp"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:fontFamily="@font/yrsaitalic"
@@ -171,22 +198,22 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/seach_near_cardview"
                         android:layout_width="0dp"
-                        android:layout_height="90dp"
+                        android:layout_height="80dp"
                         android:layout_weight="1"
                         app:cardCornerRadius="12dp"
                         android:layout_marginRight="10dp"
                         app:cardBackgroundColor="#F05454">
                         <ImageView
                             android:id="@+id/searchNearimageview"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:src="@drawable/icons_location"
                             android:layout_gravity="center"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Search Near"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:fontFamily="@font/yrsaitalic"
@@ -195,6 +222,7 @@
                     </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
+
                 <Button
                     android:id="@+id/ConnectBtn"
                     android:layout_width="match_parent"

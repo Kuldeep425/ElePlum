@@ -14,6 +14,7 @@ import com.example.eleplum.Models.CreatedTask;
 import com.example.eleplum.R;
 import com.example.eleplum.Utils.Constants;
 import com.example.eleplum.Utils.PreferenceManager;
+import com.example.eleplum.Utils.Utils;
 
 import java.lang.ref.PhantomReference;
 import java.text.DecimalFormat;
@@ -21,36 +22,37 @@ import java.util.ArrayList;
 
 public class EleNoteAdapter extends RecyclerView.Adapter<EleNoteAdapter.ViewHolder> {
     Context context;
- ArrayList<CreatedTask> arrNote;
- private PreferenceManager preferenceManager;
- public EleNoteAdapter(Context context, ArrayList<CreatedTask> arrNote){
-     this.context=context;
-     this.arrNote=arrNote;
- }
+    ArrayList<CreatedTask> arrNote;
+    private PreferenceManager preferenceManager;
+
+    public EleNoteAdapter(Context context, ArrayList<CreatedTask> arrNote) {
+        this.context = context;
+        this.arrNote = arrNote;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-      View view=  LayoutInflater.from(context).inflate(R.layout.ele_note_row,parent,false);
-      ViewHolder viewHolder= new ViewHolder(view);
-      preferenceManager=new PreferenceManager(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.ele_note_row, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        preferenceManager = new PreferenceManager(context);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-      CreatedTask createdTask=arrNote.get(position);
-     double taskLongitude=createdTask.getLongitude();
-     double taskLatitude=createdTask.getLatitude();
-        double distance=
-                getDistance(taskLatitude,taskLongitude,
-                        Double.valueOf(preferenceManager.getString(Constants.KEY_ELE_LATITUDE)),
-                        Double.valueOf(preferenceManager.getString(Constants.KEY_ELE_LONGITUDE))
-                );
+        CreatedTask createdTask = arrNote.get(position);
+        double taskLongitude = createdTask.getLongitude();
+        double taskLatitude = createdTask.getLatitude();
+        double distance = new Utils().getDistance(taskLatitude, taskLongitude,
+                Double.valueOf(preferenceManager.getString(Constants.KEY_ELE_LATITUDE)),
+                Double.valueOf(preferenceManager.getString(Constants.KEY_ELE_LONGITUDE))
+        );
 
-             holder.txtId.setText("Desc: " + createdTask.getDesc());
-             holder.txtDate.setText("Date: " + createdTask.getDate());
-             holder.txtDistance.setText("Distance : " + String.format("%.2f",distance) + "km");
-             holder.txtTime.setText("Time: " + createdTask.getTime());
+        holder.txtId.setText("Desc: " + createdTask.getDesc());
+        holder.txtDate.setText("Date: " + createdTask.getDate());
+        holder.txtDistance.setText("Distance : " + String.format("%.2f", distance) + "km");
+        holder.txtTime.setText("Time: " + createdTask.getTime());
 
     }
 
@@ -59,36 +61,16 @@ public class EleNoteAdapter extends RecyclerView.Adapter<EleNoteAdapter.ViewHold
         return arrNote.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView txtId,txtDate,txtTime,txtDistance;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtId, txtDate, txtTime, txtDistance;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView) {
             super(itemView);
-            txtId=itemView.findViewById(R.id.textId);
-            txtDate=itemView.findViewById(R.id.textDate);
-            txtTime=itemView.findViewById(R.id.textTime);
-            txtDistance=itemView.findViewById(R.id.textDistance);
+            txtId = itemView.findViewById(R.id.textId);
+            txtDate = itemView.findViewById(R.id.textDate);
+            txtTime = itemView.findViewById(R.id.textTime);
+            txtDistance = itemView.findViewById(R.id.textDistance);
         }
 
     }
-    public double getDistance(double lat1, double lon1, double lat2, double
-            lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1))
-                * Math.sin(deg2rad(lat2))
-                + Math.cos(deg2rad(lat1))
-                * Math.cos(deg2rad(lat2))
-                * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        DecimalFormat df=new DecimalFormat("#.##");
-        df.format(dist);
-        System.out.println(dist);
-        return (dist); }
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0); }
-
-    private double rad2deg(double rad) {
-        return (rad * 180.0 / Math.PI); }
 }
