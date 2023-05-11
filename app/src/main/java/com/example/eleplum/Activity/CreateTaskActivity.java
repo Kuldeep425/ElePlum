@@ -149,7 +149,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private void addCreatedTaskToDatabase() {
           databaseReference= FirebaseDatabase.getInstance().getReference("ElePlum");
           String taskId=databaseReference.child("Tasks").push().getKey();
-          CreatedTask createdTask=new CreatedTask(taskId,userId,latitude,longitude,time,date,taskDesc,address);
+          CreatedTask createdTask=new CreatedTask(taskId,preferenceManager.getString(Constants.KEY_USER_ID),latitude,longitude,time,date,taskDesc,address);
           databaseReference.child("Tasks").child(taskId).setValue(createdTask).addOnCompleteListener(new OnCompleteListener<Void>() {
               @Override
               public void onComplete(@NonNull Task<Void> task) {

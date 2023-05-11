@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.example.eleplum.Activity.CreateTaskActivity;
 import com.example.eleplum.Activity.ElectricianNearByActivity;
 import com.example.eleplum.Activity.MainActivityUser;
+import com.example.eleplum.Activity.UserAllTasksActivity;
 import com.example.eleplum.R;
 import com.example.eleplum.Utils.Constants;
 import com.example.eleplum.Utils.PreferenceManager;
@@ -46,7 +47,7 @@ import java.util.jar.Pack200;
 
 
 public class HomeUserFragment extends Fragment {
-    CardView searchNearCardview,createTaskview;
+    CardView searchNearCardview,createTaskview,myTaskView;
     View rootview;
     public final static int REQ_CODE = 30;
     boolean isLocationPer;
@@ -122,6 +123,14 @@ public class HomeUserFragment extends Fragment {
             }
         });
 
+        myTaskView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // change activity
+                startActivity(new Intent(getContext(), UserAllTasksActivity.class));
+            }
+        });
+
 
         return rootview;
     }
@@ -177,6 +186,7 @@ public class HomeUserFragment extends Fragment {
     private void initialize() {
         searchNearCardview = rootview.findViewById(R.id.seach_near_cardview);
         createTaskview=rootview.findViewById(R.id.create_task_view);
+        myTaskView=rootview.findViewById(R.id.user_task_cardview);
     }
 
     // method to get user current location

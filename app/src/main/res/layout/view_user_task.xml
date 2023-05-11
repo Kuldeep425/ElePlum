@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="10dp"
+        android:layout_marginVertical="8dp"
+        android:layout_marginHorizontal="8dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+
+            android:padding="3dp"
+            >
+            <TextView
+
+                android:id="@+id/userTaskDesc"
+                android:layout_marginVertical="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/yrsabolditalic"
+                android:text="Desc :"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:layout_marginLeft="10dp"
+                />
+            <TextView
+                android:layout_marginVertical="5dp"
+                android:fontFamily="@font/yrsalight"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/userTaskDate"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date :"
+                android:textSize="18dp"
+
+
+                />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/userTaskTime"
+                android:textColor="@color/black"
+                android:layout_marginVertical="5dp"
+                android:fontFamily="@font/yrsalight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time :"
+                android:textSize="18dp"
+
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="300dp">
+           <ImageView
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:src="@drawable/electrician"
+               />
+            <TextView
+                android:id="@+id/acceptElectricianCounts"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="0"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/yrsabolditalic"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/darkgrean"
+                android:layout_marginHorizontal="5dp"
+                />
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</LinearLayout>
