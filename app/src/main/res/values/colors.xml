@@ -18,6 +18,9 @@
     <color name="colorCallInvitationStart">#4004BB</color>
     <color name="colorCallInvitationEnd">#8A1AAA</color>
 
+    <color name="chatReceiveColor">#0091EA</color>
+    <color name="chatSendColor">#5FBA1E</color>
+
 
 
 </resources>
