@@ -40,6 +40,8 @@ public class Constants {
     public static final String REMOTE_MSG_CALL_ACCEPTED = "accept";
     public static final String REMOTE_MSG_CALL_REJECTED = "reject";
     public static final String REMOTE_MSG_CALL_CANCELLED = "cancelled";
+    public static final String REMOTE_MSG_NOT_ANSWERED = "notAnswered";
+
 
     public static final String REMOTE_MSG_CALL_ROOM="callRoom";
     public static final String REMOTE_MSG_NOTIFICATION="notification";

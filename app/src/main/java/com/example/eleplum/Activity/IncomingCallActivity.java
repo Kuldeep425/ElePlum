@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,6 @@ import com.example.eleplum.Retrofit.ApiService;
 import com.example.eleplum.Retrofit.RetrofitClient;
 import com.example.eleplum.Utils.Constants;
 import com.example.eleplum.Utils.Utils;
-import com.google.googlejavaformat.Indent;
 
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
@@ -27,6 +27,8 @@ import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -37,10 +39,17 @@ public class IncomingCallActivity extends AppCompatActivity {
     String callerName,callerImageUrl,callerFcmToken;
     CircleImageView callAnswerImageView,callRejectImageView,callerImageView;
     TextView callerNameTextView;
+    private MediaPlayer mediaPlayer;
+
+
+    private Timer mTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incoming_call);
+
+        // set ringtone for calling
+         setRingTone();
 
         // hide action bar
         getSupportActionBar().hide();
@@ -50,6 +59,11 @@ public class IncomingCallActivity extends AppCompatActivity {
 
         // initialize the widgets
         initialization();
+
+        // set timer for 30 seconds if the callee does not receive or reject the call
+        // it means callee didn't answer the call
+        // method to count timer
+        startATimer();
 
         // set the caller data on incoming activity
         setCallerData();
@@ -70,6 +84,37 @@ public class IncomingCallActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    // method to count the timer for call once the timer reached to the 30 seconds cut the call
+    // and send the message that caller did not receive the call
+    private void startATimer() {
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // kill the activity if 30 seconds complete
+                sendResponseToCaller(Constants.REMOTE_MSG_NOT_ANSWERED);
+                finish();
+            }
+        },30000);
+    }
+
+    // method to start the ringtone for outgoing call
+    private void setRingTone() {
+        // Initialize the MediaPlayer with the audio file
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.barsat_ki_dhun);
+
+        // Start playing the audio file
+        mediaPlayer.start();
+
+        //listener to restart the audio file
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mediaPlayer.start();
+            }
+        });
 
     }
 
@@ -121,11 +166,16 @@ public class IncomingCallActivity extends AppCompatActivity {
                                 }
                                 catch (Exception e){
                                     Toast.makeText(IncomingCallActivity.this, "Accepting Error :"+e, Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }
                                 Toast.makeText(IncomingCallActivity.this, "Accepted", Toast.LENGTH_SHORT).show();
                             }
-                            else{
+                            else if(type.equals(Constants.REMOTE_MSG_CALL_REJECTED)){
                                 Toast.makeText(IncomingCallActivity.this, "Rejected", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            else if(type.equals(Constants.REMOTE_MSG_NOT_ANSWERED)){
+                                Toast.makeText(IncomingCallActivity.this, "Did not answer", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         }
@@ -152,6 +202,7 @@ public class IncomingCallActivity extends AppCompatActivity {
        callerImageView=findViewById(R.id.callerImageView);
 
        callerNameTextView=findViewById(R.id.callerNameTextView);
+       mTimer=new Timer();
 
     }
 
@@ -188,5 +239,13 @@ public class IncomingCallActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(
                 callResponseReceiver
         );
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.stop();
+        mTimer.cancel();
+
     }
 }

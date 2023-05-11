@@ -4,6 +4,7 @@ import static com.example.eleplum.Fragments.ElectricianNearByGoogleMapFragment.e
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.PowerManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,17 +113,16 @@ public class ElectricianNearByFragment extends Fragment implements ElectricianAd
         intent.putExtra("calleeImageURL",electrician.getImageURL());
         intent.putExtra("calleeFcmToken",electrician.getFcmToken());
         Toast.makeText(getContext(),"Callee FcM: "+electrician.getFcmToken(), Toast.LENGTH_SHORT).show();
-
         startActivity(intent);
     }
 
     @Override
     public void onChatIconClick(Electrician electrician) {
-
           Intent intent=new Intent(getContext(), ChatActivity.class);
           intent.putExtra(Constants.CHAT_RECEIVER_ID,electrician.getElectricianId());
           intent.putExtra(Constants.CHAT_RECEIVER_NAME,electrician.getName());
           startActivity(intent);
-
     }
+
+
 }
