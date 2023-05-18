@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eleplum.Activity.LoginActivity;
+import com.example.eleplum.AdapterListener.NotificationListener;
 import com.example.eleplum.Models.CreatedTask;
 import com.example.eleplum.R;
 import com.example.eleplum.Utils.Constants;
@@ -24,10 +26,12 @@ public class EleNoteAdapter extends RecyclerView.Adapter<EleNoteAdapter.ViewHold
     Context context;
     ArrayList<CreatedTask> arrNote;
     private PreferenceManager preferenceManager;
+    NotificationListener listener;
 
-    public EleNoteAdapter(Context context, ArrayList<CreatedTask> arrNote) {
+    public EleNoteAdapter(Context context, ArrayList<CreatedTask> arrNote,NotificationListener listener) {
         this.context = context;
         this.arrNote = arrNote;
+        this.listener = listener;
     }
 
     @NonNull
@@ -53,7 +57,18 @@ public class EleNoteAdapter extends RecyclerView.Adapter<EleNoteAdapter.ViewHold
         holder.txtDate.setText("Date: " + createdTask.getDate());
         holder.txtDistance.setText("Distance : " + String.format("%.2f", distance) + "km");
         holder.txtTime.setText("Time: " + createdTask.getTime());
-
+        holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onAcceptClick(createdTask);
+            }
+        });
+        holder.rejectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onRejectClick(createdTask);
+            }
+        });
     }
 
     @Override
@@ -63,6 +78,8 @@ public class EleNoteAdapter extends RecyclerView.Adapter<EleNoteAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtId, txtDate, txtTime, txtDistance;
+        Button acceptBtn,rejectBtn;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -70,6 +87,8 @@ public class EleNoteAdapter extends RecyclerView.Adapter<EleNoteAdapter.ViewHold
             txtDate = itemView.findViewById(R.id.textDate);
             txtTime = itemView.findViewById(R.id.textTime);
             txtDistance = itemView.findViewById(R.id.textDistance);
+            acceptBtn = itemView.findViewById(R.id.taskAcceptBtn);
+            rejectBtn = itemView.findViewById(R.id.taskRejectBtn);
         }
 
     }

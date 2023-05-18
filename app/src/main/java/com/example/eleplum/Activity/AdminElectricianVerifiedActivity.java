@@ -99,6 +99,7 @@ public class AdminElectricianVerifiedActivity extends AppCompatActivity implemen
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println(snapshot);
+                electricians=new ArrayList<>();
                 for(DataSnapshot d:snapshot.getChildren()) {
                     electricians.add(d.getValue(Electrician.class));
                 }

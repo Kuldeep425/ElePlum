@@ -5,6 +5,7 @@ import static com.example.eleplum.Activity.LoginActivity.userId;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -60,6 +61,9 @@ public class CreateTaskActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     JSONArray fcmOfNearByElectricians;
     PreferenceManager preferenceManager;
+    ProgressDialog dialog;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,12 +103,24 @@ public class CreateTaskActivity extends AppCompatActivity {
                 date=dateTxt.getText().toString().trim();
                 address=addressTxt.getText().toString().trim();
                 if(validateInputFields()){
+                    // start the progress status
+                    showDialogOfProgress();
+
                     // add task to database
                     addCreatedTaskToDatabase();
                 }
             }
         });
 
+    }
+
+    // this method is called when user clicks on creating task btn so that it can not
+    // multiple request at a time and show that work is in progress
+    private void showDialogOfProgress() {
+        dialog.setTitle("Task Creating");
+        dialog.setMessage("Please wait...");
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     // this is the method to find the fcm tokens of all near by electrician to
@@ -156,6 +172,7 @@ public class CreateTaskActivity extends AppCompatActivity {
                   if(task.isSuccessful()){
                       // now send the notification of created task to near by electricians
                       Toast.makeText(CreateTaskActivity.this, "created", Toast.LENGTH_SHORT).show();
+                      dialog.setTitle("Sending Notification");
                       sendNotificationToNearByElectricians(createdTask);
                   }
               }
@@ -197,6 +214,10 @@ public class CreateTaskActivity extends AppCompatActivity {
                         if(response.isSuccessful()){
                            if(type.equals(Constants.REMOTE_MSG_NOTIFICATION)){
                                Toast.makeText(CreateTaskActivity.this, "notified near by electricians", Toast.LENGTH_SHORT).show();
+                               // dismiss the dialog
+                               dialog.dismiss();
+                               // clear the input fields
+                               clearTheFields();
                            }
                         }
                     }
@@ -208,6 +229,14 @@ public class CreateTaskActivity extends AppCompatActivity {
                         Toast.makeText(CreateTaskActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    // when task is created clear the fields
+    private void clearTheFields() {
+        taskTxt.setText("");
+        timeTxt.setText("");
+        dateTxt.setText("");
+        taskTxt.setText("");
     }
 
 
@@ -267,5 +296,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         dateTxt=findViewById(R.id.date);
         addressTxt=findViewById(R.id.address);
         createBtn=findViewById(R.id.create_taskBtn);
+
+        dialog = new ProgressDialog(this);
     }
 }

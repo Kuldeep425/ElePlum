@@ -1,6 +1,7 @@
 package com.example.eleplum.Models;
 
 import java.util.List;
+import java.util.Set;
 
 public class CreatedTask {
     private String taskId;
@@ -11,7 +12,8 @@ public class CreatedTask {
     private String date;
     private String desc;
     private String address;
-    private List<String>AcceptedUser;
+    private List<String>listOfAcceptedEle=null;
+    private List<String>listOfActEle=null;
 
     public CreatedTask(String taskId, String userId, double latitude, double longitude, String time, String date, String desc,String address) {
         this.taskId=taskId;
@@ -83,13 +85,6 @@ public class CreatedTask {
         this.desc = desc;
     }
 
-    public List<String> getAcceptedUser() {
-        return AcceptedUser;
-    }
-
-    public void setAcceptedUser(List<String> acceptedUser) {
-        AcceptedUser = acceptedUser;
-    }
 
     public String getAddress() {
         return address;
@@ -97,5 +92,21 @@ public class CreatedTask {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<String> getListOfAcceptedEle() {
+        return listOfAcceptedEle;
+    }
+
+    public void setListOfAcceptedEle(List<String> listOfAcceptedEle) {
+        this.listOfAcceptedEle = listOfAcceptedEle;
+    }
+
+    public List<String> getListOfActEle() {
+        return listOfActEle;
+    }
+
+    public void setListOfActEle(List<String> listOfActEle) {
+        this.listOfActEle = listOfActEle;
     }
 }
